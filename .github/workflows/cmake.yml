@@ -2,7 +2,9 @@ name: C++ CI
 
 on:
   push:
-    branches: ['*'] # NOTE: replace/update with appropriate branch name(s)
+    branches:
+      - '*'
+      - 'tests/*' # NOTE: replace/update with appropriate branch name(s)
     tags: ['*']
   # pull_request:
   #   branches: ['*'] # NOTE: replace/update with appropriate branch name(s)
@@ -238,7 +240,7 @@ jobs:
 
       - name: "Build"
         run: |
-          cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=gcc-12 -DCMAKE_CXX_COMPILER=g++-12 -DRUN_TESTS=ON
+          cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=gcc-12 -DCMAKE_CXX_COMPILER=g++-12 -DBUILD_TESTS=ON
           cmake --build build
 
       - name: "Run tests"
