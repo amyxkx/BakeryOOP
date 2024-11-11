@@ -10,10 +10,11 @@ configure() {
     BUILD_DIR="${DEFAULT_BUILD_DIR}"
     BUILD_TYPE="${DEFAULT_BUILD_TYPE}"
     INSTALL_DIR="${DEFAULT_INSTALL_DIR}"
+    BUILD_TESTS="${DEFAULT_BUILD_TESTS}"
     SOURCE_DIR="."
     CMAKE_OPTS=()
 
-    while getopts ":b:c:g:i:s:t" opt; do
+    while getopts ":b:c:g:i:s:t:r:" opt; do
       case "${opt}" in
         b) BUILD_DIR="${OPTARG}"
         ;;
@@ -27,7 +28,10 @@ configure() {
         ;;
         t) BUILD_TYPE="${OPTARG}"
         ;;
+        r) BUILD_TESTS="${OPTARG}"
+        ;;
         *) printf "Unknown option %s; available options: \n\
+            -r (build tests)\n\
             -b (build dir)\n\
             -c (custom CMake options)\n\
             -g (generator)\n\
@@ -44,6 +48,7 @@ configure() {
           -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
           -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}" \
           -DBUILD_TESTS="${BUILD_TESTS}" \
+          -DBUILD_TESTS="${BUILD_TESTS}" \
           "${CMAKE_OPTS[@]}"
 }
 
@@ -52,7 +57,6 @@ build() {
     #
     BUILD_DIR="${DEFAULT_BUILD_DIR}"
     BUILD_TYPE="${DEFAULT_BUILD_TYPE}"
-    BUILD_TESTS="${DEFAULT_BUILD_TESTS}"
     NPROC=6
 
     while getopts ":b:h:j:t:r:" opt; do
@@ -66,7 +70,6 @@ build() {
         r) BUILD_TESTS="${OPTARG}"
         ;;
         h) printf "Unknown option %s; available options: \n\
-            -r (build tests)\n\
             -b (build dir)\n\
             -j (number of jobs for parallel build)\n\
             -t (build type)\n" "${opt}"
@@ -78,7 +81,7 @@ build() {
       shift $((OPTIND-1))
     done
 
-    cmake --build "${BUILD_DIR}" --config "${BUILD_TYPE}" -j "${NPROC}" "$@" -DBUILD_TESTS="${BUILD_TESTS}"
+    cmake --build "${BUILD_DIR}" --config "${BUILD_TYPE}" -j "${NPROC}" "$@"
 }
 
 install() {

@@ -8,6 +8,10 @@ inputs:
   custom_flags:
     description: 'Custom CMake configuration flags'
     required: false
+  build_tests:
+    description: 'Enable or disable tests'
+    required: false
+    default: 'OFF'
 
 runs:
   using: "composite"
@@ -69,6 +73,7 @@ runs:
           -t ${{ env.BUILD_TYPE }} \
           -i ${GITHUB_WORKSPACE}/artifacts \
           -c "-DPROJECT_WARNINGS_AS_ERRORS=${{ inputs.warnings_as_errors }} -DGITHUB_ACTIONS=${GITHUB_ACTIONS} ${{ inputs.custom_flags }}"
+          -r "${{ inputs.build_tests }}"
 
     - name: Configure CMake
       shell: bash
