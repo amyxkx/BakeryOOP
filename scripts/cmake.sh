@@ -48,7 +48,6 @@ configure() {
           -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
           -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}" \
           -DBUILD_TESTS="${BUILD_TESTS}" \
-          -DBUILD_TESTS="${BUILD_TESTS}" \
           "${CMAKE_OPTS[@]}"
 }
 
