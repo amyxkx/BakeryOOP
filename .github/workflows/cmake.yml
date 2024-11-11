@@ -2,7 +2,9 @@ name: C++ CI
 
 on:
   push:
-    branches: ['*'] # NOTE: replace/update with appropriate branch name(s)
+    branches:
+      - '*'
+      - 'tests/*' # NOTE: replace/update with appropriate branch name(s)
     tags: ['*']
   # pull_request:
   #   branches: ['*'] # NOTE: replace/update with appropriate branch name(s)
@@ -192,6 +194,11 @@ jobs:
       - name: Build
         run: |
           bash ./scripts/cmake.sh build -t ${{ env.BUILD_TYPE }}
+
+      - name: Run Tests
+        run: |
+          cd ${{ env.BUILD_DIR }}
+          ctest --verbose --no-compress-output
 
       - name: Install
         # Use CMake to "install" build artifacts (only interested in CMake registered targets) to our custom artifacts directory
