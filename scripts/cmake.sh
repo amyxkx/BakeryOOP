@@ -3,17 +3,18 @@
 DEFAULT_BUILD_DIR="build"
 DEFAULT_BUILD_TYPE="Debug"
 DEFAULT_INSTALL_DIR="install_dir"
-
+DEFAULT_BUILD_TESTS="OFF"
 configure() {
     # cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
     #
     BUILD_DIR="${DEFAULT_BUILD_DIR}"
     BUILD_TYPE="${DEFAULT_BUILD_TYPE}"
     INSTALL_DIR="${DEFAULT_INSTALL_DIR}"
+    BUILD_TESTS="${DEFAULT_BUILD_TESTS}"
     SOURCE_DIR="."
     CMAKE_OPTS=()
 
-    while getopts ":b:c:g:i:s:t:" opt; do
+    while getopts ":b:c:g:i:s:t:r" opt; do
       case "${opt}" in
         b) BUILD_DIR="${OPTARG}"
         ;;
@@ -26,6 +27,8 @@ configure() {
         s) SOURCE_DIR="${OPTARG}"
         ;;
         t) BUILD_TYPE="${OPTARG}"
+        ;;
+        r) BUILD_TESTS="${OPTARG}"
         ;;
         *) printf "Unknown option %s; available options: \n\
             -b (build dir)\n\
@@ -43,6 +46,7 @@ configure() {
           -B "${BUILD_DIR}" \
           -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
           -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}" \
+          -DBUILD_TESTS="${BUILD_TESTS}" \
           "${CMAKE_OPTS[@]}"
 }
 
