@@ -1,11 +1,16 @@
 # Sweet Spell Bakery
 
-Descoperă magia deserturilor fermecate, acum la îndemâna ta! Aplicația Sweet Spell Bakery îți transformă dorințele dulci în realitate, oferindu-ți o experiență rapidă, simplă și delicioasă. Cofetarii noștri, adevărați maeștri ai artei culinare, creează cu pasiune prăjituri rafinate, torturi spectaculoase pentru ocazii speciale și o selecție de deserturi unice, toate pregătite cu cele mai fine ingrediente.
+  Descoperă magia deserturilor fermecate, acum la îndemâna ta! Aplicația Sweet Spell Bakery îți transformă dorințele dulci în realitate, oferindu-ți o experiență rapidă, simplă și delicioasă. Cofetarii noștri, adevărați maeștri ai artei culinare, creează cu pasiune prăjituri rafinate, torturi spectaculoase pentru ocazii speciale și o selecție de deserturi unice, toate pregătite cu cele mai fine ingrediente.
 
-Fie că visezi la o prăjitură delicată sau la un tort memorabil, acum, prin intermediul aplicației noastre, te poți bucura de toate acestea mai ușor ca niciodată. 
+  Fie că visezi la o prăjitură delicată sau la un tort memorabil, acum, prin intermediul aplicației noastre, te poți bucura de toate acestea mai ușor ca niciodată. 
 Explorează aromele care te inspiră, plasează comanda oricând și oriunde, iar noi ne vom ocupa de restul.
 
 Intră acum în aplicație, lasă-te cucerit de vrăjile noastre dulci și bucură-te de un desert care te va face să te simți cu adevărat "under the sweet spell"!
+
+
+
+
+
 
 
 O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie de apeluri proxy către cod generat.
