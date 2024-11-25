@@ -58,6 +58,10 @@ add_executable(${PROJECT_NAME}
         Ornament.h
         Cake.cpp
         Cake.h
+        Order.cpp
+        Order.h
+        Client.cpp
+        Client.h
 )
 
 include(cmake/CompilerFlags.cmake)
