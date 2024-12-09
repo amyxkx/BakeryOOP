@@ -15,10 +15,10 @@
 #include <iomanip>  // For std::fixed and std::setprecision
 #include <sstream>
 
-void displayDessertCollection(sf::RenderWindow& window, sf::Font& font);
-void displayCakesPage(sf::RenderWindow& window, sf::Font& font);
-void displaySpecialCakesPage(sf::RenderWindow& window, sf::Font& font);
-void displayPastriesPage(sf::RenderWindow& window, sf::Font& font);
+void displayDessertCollection(sf::RenderWindow& window, sf::Font const& font);
+void displayCakesPage(sf::RenderWindow& window, sf::Font const& font);
+void displaySpecialCakesPage(sf::RenderWindow& window, sf::Font const& font);
+void displayPastriesPage(sf::RenderWindow& window, sf::Font const& font);
 
 class Cakes : public Product {
     std::string FlavorProfile;
@@ -46,14 +46,16 @@ public:
     }
 
     // Getter for FlavorProfile
-    [[nodiscard]] std::string getFlavorProfile() const {
+    [[nodiscard]] const std::string& getFlavorProfile() const {
         return FlavorProfile;
     }
 
     // Getter for DecorationStyle
-    [[nodiscard]] std::string getDecorationStyle() const {
+    [[nodiscard]] const std::string& getDecorationStyle() const {
         return DecorationStyle;
     }
+
+
     // Getter for days_fresh
     [[nodiscard]] int getDaysFresh() const {
         return days_fresh;
@@ -112,7 +114,7 @@ class SeasonalSpecialCake : public Product{
             // Get the current date
             auto now = std::chrono::system_clock::now();
             std::time_t currentTime = std::chrono::system_clock::to_time_t(now);
-            std::tm* localTime = std::localtime(&currentTime);
+            std::tm* const localTime = std::localtime(&currentTime);
 
             // Convert current date to YYYY-MM-DD string
             std::ostringstream currentDateStream;
@@ -233,7 +235,7 @@ sf::RectangleShape createButton(float x, float y, float width, float height, sf:
 }
 
 // Function to create a text object
-sf::Text createText(const std::string& content, const sf::Font& font, unsigned int size, sf::Color color, float x, float y) {
+sf::Text createText(const std::string& content, sf::Font const& font, unsigned int size, sf::Color color, float x, float y) {
 
     sf::Text text(content, font, size);
 
@@ -260,7 +262,7 @@ sf::Sprite createSprite(const std::string& imagePath, float x, float y) {
 }
 
 // Function to handle the main menu
-void displayMainMenu(sf::RenderWindow& window, sf::Font& font) {
+void displayMainMenu(sf::RenderWindow& window, sf::Font const& font) {
     // Load background texture
     sf::Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("D:/BakeryOOP/assets/background.jpeg")) {
@@ -314,7 +316,7 @@ void displayMainMenu(sf::RenderWindow& window, sf::Font& font) {
 }
 
 
-void displayDessertCollection(sf::RenderWindow& window, sf::Font& font) {
+void displayDessertCollection(sf::RenderWindow& window, sf::Font const& font) {
     // Load background texture
     sf::Texture backgroundTexturePage2;
     if (!backgroundTexturePage2.loadFromFile("D:/BakeryOOP/assets/background2.jpeg")) {
@@ -390,9 +392,9 @@ void displayDessertCollection(sf::RenderWindow& window, sf::Font& font) {
     }
 }
 
-void displayCakeDetailsPage(sf::RenderWindow& window, sf::Font& font, const Cakes& cake);
+void displayCakeDetailsPage(sf::RenderWindow& window, sf::Font const& font, const Cakes& cake);
 
-void displayCakesPage(sf::RenderWindow& window, sf::Font& font) {
+void displayCakesPage(sf::RenderWindow& window,sf::Font const& font ) {
 
 
     sf::Texture backgroundTexture;
@@ -470,7 +472,7 @@ void displayCakesPage(sf::RenderWindow& window, sf::Font& font) {
     };
 
 
-void displayCakeDetailsPage(sf::RenderWindow& window, sf::Font& font, const Cakes& cake) {
+void displayCakeDetailsPage(sf::RenderWindow& window, sf::Font const& font, const Cakes& cake) {
     // Load the background texture based on the cake
     sf::Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("D:/BakeryOOP/assets/PaginaCakes/backgrounds/" + std::to_string(cake.getID()) + ".jpg") ) {
@@ -553,7 +555,7 @@ void displayCakeDetailsPage(sf::RenderWindow& window, sf::Font& font, const Cake
         }
     };
 // Function to display Special Cakes page
-void displaySpecialCakesPage(sf::RenderWindow& window, sf::Font& font) {
+void displaySpecialCakesPage(sf::RenderWindow& window, sf::Font const& font) {
     window.clear();
 sf::Texture backgroundTexture;
 if (!backgroundTexture.loadFromFile("D:/BakeryOOP/assets/PaginaSeasonalCakes/background2.jpg")) {
@@ -623,7 +625,7 @@ while (window.isOpen()) {
 };
 
 // Function to display Pastries page
-void displayPastriesPage(sf::RenderWindow& window, sf::Font& font) {
+void displayPastriesPage(sf::RenderWindow& window,sf::Font const& font) {
 
         window.clear();
 
