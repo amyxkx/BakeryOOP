@@ -164,7 +164,7 @@ std::vector<SeasonalSpecialCake> SeasonalSpecialCake::SeasonalCakeList {
     public:
 
         Pastries(const int ID, const std::string& name, const std::string& flavor, const std::string& cream,
-        float weight_without_ornaments, float price_per_kg, const std::string& specific, const std::string& flavorProfile, float price)
+        float weight_without_ornaments, float price_per_kg, const std::string& specific, const std::string& flavorProfile)
         : Product(ID, name, flavor, cream, weight_without_ornaments, price_per_kg),
           Specific(specific), FlavorProfile(flavorProfile) {}
 
@@ -193,12 +193,12 @@ std::vector<SeasonalSpecialCake> SeasonalSpecialCake::SeasonalCakeList {
     int Pastries::closingHour = 20;
 
 std::vector<Pastries> PastriesList= {
-    Pastries(1, "Croissant", "Buttery", "Chocolate Cream", 50.0f, 10.0f, "French", "Flaky and buttery", 15.0f),
-    Pastries(2, "Baguette", "Wheat", "Garlic&Butter", 20.0f, 2.0f, "French", "Crispy", 10.0f),
-    Pastries(3, "Baklava", "Sweet", "Honey", 0.2f, 150.0f, "Turkish", "Nutty and sweet", 10.0f),
-    Pastries(4, "Cinnamon Roll", "Cinnamon", "Cream Cheese Frosting", 0.25f, 120.0f, "American", "Soft, sweet, and spiced", 15.0f),
-    Pastries(5, "Danish", "Fruity", "Cream cheese", 0.1f, 80.0f, "Danish", "Sweet and creamy", 6.0f),
-    Pastries(6, "Eclair", "Vanilla", "Chocolate Glaze", 0.2f, 80.0f, "French", "Creamy and rich", 12.0f)
+    Pastries(1, "Croissant", "Buttery", "Chocolate Cream", 50.0f, 10.0f, "French", "Flaky and buttery"),
+    Pastries(2, "Baguette", "Wheat", "Garlic&Butter", 20.0f, 2.0f, "French", "Crispy"),
+    Pastries(3, "Baklava", "Sweet", "Honey", 0.2f, 150.0f, "Turkish", "Nutty and sweet"),
+    Pastries(4, "Cinnamon Roll", "Cinnamon", "Cream Cheese Frosting", 0.25f, 120.0f, "American", "Soft, sweet, and spiced"),
+    Pastries(5, "Danish", "Fruity", "Cream cheese", 0.1f, 80.0f, "Danish", "Sweet and creamy"),
+    Pastries(6, "Eclair", "Vanilla", "Chocolate Glaze", 0.2f, 80.0f, "French", "Creamy and rich")
 };
 
 
