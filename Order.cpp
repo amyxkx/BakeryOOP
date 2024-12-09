@@ -3,17 +3,13 @@
 
 int Order::orderCounter = 0;
 
-Order::Order( int ID, std::string Date, std::string payment, Cake ck )
-    : DateOfDelivery(Date),
-      paymentMethod(payment),
-      cake(ck) {
+Order::Order( int ID, std::string Date, std::string payment )
+    : DateOfDelivery(Date), paymentMethod(payment) {
         OrderID=orderCounter++;
 };
 
 Order::Order(const Order& other)
-    :DateOfDelivery(other.DateOfDelivery),
-      paymentMethod(other.paymentMethod),
-      cake(other.cake) {
+    :DateOfDelivery(other.DateOfDelivery), paymentMethod(other.paymentMethod){
         OrderID=orderCounter++;
 };
 
@@ -21,7 +17,6 @@ Order& Order::operator=(const Order &other) {
     if (this != &other) {
         DateOfDelivery=other.DateOfDelivery;
         paymentMethod=other.paymentMethod;
-        cake=other.cake;
 
         OrderID = ++orderCounter;
     }
@@ -32,9 +27,6 @@ Order& Order::operator=(const Order &other) {
     return OrderID;
 }
 
-[[nodiscard]] const Cake& Order::getCakeDetails() const {
-    return cake;
-}
 
 [[nodiscard]] const std::string& Order::getDateOfDelivery() const {
     return DateOfDelivery;
@@ -44,3 +36,14 @@ Order& Order::operator=(const Order &other) {
     return paymentMethod;
 }
 
+void Order::addProduct( std::shared_ptr<Product> PointerProduct) {
+    this->orderedProduct.push_back(PointerProduct);
+}
+
+float Order::orderFinalPrice() const {
+    float finalPrice = 0;
+
+    for( auto & PointerProduct: this->orderedProduct) {
+        finalPrice+=PointerProduct->FinalPrice();
+    }
+}

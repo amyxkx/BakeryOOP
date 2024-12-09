@@ -56,8 +56,8 @@ add_executable(${PROJECT_NAME}
     env_fixes.h
         Ornament.cpp
         Ornament.h
-        Cake.cpp
-        Cake.h
+        Product.cpp
+        Product.h
         Order.cpp
         Order.h
         Client.cpp
