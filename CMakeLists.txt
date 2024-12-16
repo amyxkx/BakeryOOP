@@ -48,6 +48,7 @@ elseif(UNIX)
 endif()
 
 ###############################################################################
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mconsole")
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${PROJECT_NAME}
@@ -62,8 +63,9 @@ add_executable(${PROJECT_NAME}
         Order.h
         Client.cpp
         Client.h
+        EroareInput.h
+        EroareNumarTelefon.h
 )
-
 include(cmake/CompilerFlags.cmake)
 
 ###############################################################################

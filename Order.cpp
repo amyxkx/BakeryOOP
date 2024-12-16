@@ -3,13 +3,13 @@
 
 int Order::orderCounter = 0;
 
-Order::Order( int ID, std::string Date, std::string payment )
-    : DateOfDelivery(Date), paymentMethod(payment) {
+Order::Order( int ID, std::string Date, std::string payment, Client client )
+    : DateOfDelivery(Date), paymentMethod(payment), client(client) {
         OrderID=orderCounter++;
 };
 
 Order::Order(const Order& other)
-    :DateOfDelivery(other.DateOfDelivery), paymentMethod(other.paymentMethod){
+    :DateOfDelivery(other.DateOfDelivery), paymentMethod(other.paymentMethod), client(other.client) {
         OrderID=orderCounter++;
 };
 
@@ -46,4 +46,8 @@ float Order::orderFinalPrice() const {
     for( auto & PointerProduct: this->orderedProduct) {
         finalPrice+=PointerProduct->FinalPrice();
     }
+}
+
+void Order::clearOrder() {
+    orderedProduct.clear();  // Clears the products in the order
 }

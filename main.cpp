@@ -10,15 +10,20 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
-#include <Helper.h>
-#include "env_fixes.h" /// NOTE: this include is needed for environment-specific fixes     //
-#include <iomanip>  // For std::fixed and std::setprecision
+#include <iomanip>
 #include <sstream>
 
-void displayDessertCollection(sf::RenderWindow& window, sf::Font const& font);
-void displayCakesPage(sf::RenderWindow& window, sf::Font const& font);
-void displaySpecialCakesPage(sf::RenderWindow& window, sf::Font const& font);
-void displayPastriesPage(sf::RenderWindow& window, sf::Font const& font);
+#include "Order.h"
+
+enum class PageState {
+    MENU,
+    PRODUCT_PAGE,
+    PRODUCT_DETAILS,
+    WELCOME
+};
+
+PageState currentPageState = PageState::MENU;
+
 
 class Cakes : public Product {
     std::string FlavorProfile;
@@ -30,37 +35,31 @@ public:
     Cakes(int productID, const std::string& productName, const std::string& flavor, const std::string& cream,
          float weight, float basePrice, const std::string& FlavorProfile, const std::string& DecorationStyle,
          int days_fresh, const std::vector<Ornament>& ornaments)
-       : Product(productID, productName, flavor, cream, weight, basePrice),  // Parent class initialized first
+       : Product(productID, productName, flavor, cream, weight, basePrice),
          FlavorProfile(FlavorProfile), DecorationStyle(DecorationStyle), days_fresh(days_fresh), ornaments(ornaments) {}
 
     [[nodiscard]] float FinalPrice() const override {
-        // Start with base price * weight
         float totalPrice = basePrice * weight;
 
-        // Add the price of each ornament
         for (const auto& ornament : ornaments) {
             totalPrice += ornament.getPrice() * ornament.getAmount();
         }
 
-        return totalPrice;  // Return the total price including ornaments
+        return totalPrice;
     }
 
-    // Getter for FlavorProfile
     [[nodiscard]] const std::string& getFlavorProfile() const {
         return FlavorProfile;
     }
 
-    // Getter for DecorationStyle
     [[nodiscard]] const std::string& getDecorationStyle() const {
         return DecorationStyle;
     }
 
-
-    // Getter for days_fresh
     [[nodiscard]] int getDaysFresh() const {
         return days_fresh;
     }
-    // Getter for ornaments
+
     [[nodiscard]] const std::vector<Ornament>& getOrnaments() const {
         return ornaments;
     }
@@ -73,18 +72,7 @@ public:
     [[nodiscard]] int getID() const {
         return Product::getProductID();
     }
-    static std::vector<Cakes> CakeList;
 };
-
-std::vector<Cakes> Cakes::CakeList = {
-    Cakes(1, "Chocolate Cake", "Chocolate", "Chocolate Ganache", 3.0f, 80, "Rich and Velvety", "Chocolate Drip with Truffles", 4,ChocolateOrnaments),
-    Cakes(2, "Cheesecake", "Biscuit", "Cream Cheese", 2.0f, 70, "Creamy and Smooth", "Fruit Glaze with Fresh Berries", 3, CheesecakeOrnaments),
-    Cakes(3, "Lemon Cake", "Vanilla with Lemon", "Lemon Frosting", 2.5f, 80, "Citrusy and Light", "Piped Lemon Frosting", 4, LemonOrnaments ),
-    Cakes(4, "Forest Fruit Cake", "Chocolate", "Whipped Cream", 2.0f, 85, "Berry Explosion", "Chocolate Shards with Fresh Fruit", 4, ForestFruitOrnaments),
-    Cakes(5, "Strawberry Shortcake", "Vanilla", "Whipped Cream", 3.0f, 90, "Sweet and Fruity", "Whipped Cream and Fresh Strawberries",3, StrawberryShortcakeOrnaments),
-    Cakes(6, "Coffee Walnut Cake", "Coffee&Cacao", "Walnut Cream", 3.0f, 90, "Bold and Nutty", "Elegant Coffee Frosting with Walnut Garnish", 4, CoffeeWalnutOrnaments),
-};
-
 
 
 class SeasonalSpecialCake : public Product{
@@ -99,29 +87,26 @@ class SeasonalSpecialCake : public Product{
 
         : Product(ID, name, flavor, cream, weight, basePrice), SeasonName(season), availabilityToBuy(availabilityDate), message(message) {}
 
-
-        // Getter for ID (uses Product's getProductID)
         [[nodiscard]] int getID() const {
-            return getProductID();  // Calls the inherited getProductID() method
+            return getProductID();
         }
 
-        // Getter for name (uses Product's getProductName)
         [[nodiscard]] std::string getName() const {
-            return getProductName();  // Calls the inherited getProductName() method
+            return getProductName();
         }
 
         [[nodiscard]] float FinalPrice() const override {
-            // Get the current date
+
             auto now = std::chrono::system_clock::now();
             std::time_t currentTime = std::chrono::system_clock::to_time_t(now);
             std::tm* const localTime = std::localtime(&currentTime);
 
-            // Convert current date to YYYY-MM-DD string
+
             std::ostringstream currentDateStream;
             currentDateStream << std::put_time(localTime, "%Y-%m-%d");
             std::string currentDate = currentDateStream.str();
 
-            // Convert both dates to tm structures
+
             std::tm availabilityDate = {};
             std::tm currentTm = {};
             std::istringstream availabilityStream(availabilityToBuy);
@@ -129,7 +114,7 @@ class SeasonalSpecialCake : public Product{
             availabilityStream >> std::get_time(&availabilityDate, "%Y-%m-%d");
             currentStream >> std::get_time(&currentTm, "%Y-%m-%d");
 
-            // Compute the difference in days
+
             auto availabilityTime = std::mktime(&availabilityDate);
             auto currentTimeSec = std::mktime(&currentTm);
             double differenceInDays = std::difftime(availabilityTime, currentTimeSec) / (60 * 60 * 24);
@@ -143,7 +128,7 @@ class SeasonalSpecialCake : public Product{
                 return basePrice*weight * 0.8f;
             }
 
-            return basePrice*weight; // No discount
+            return basePrice*weight;
         }
         static std::vector<SeasonalSpecialCake> SeasonalCakeList;
     };
@@ -158,14 +143,14 @@ std::vector<SeasonalSpecialCake> SeasonalSpecialCake::SeasonalCakeList {
     SeasonalSpecialCake(6, "Halloween Special", "Pumpkin", "Spiced Cream", 2.0f, 140.0f, "Autumn", "2024-10-31", "Happy Halloween!")
 };
 
-    class Pastries : public Product {
+    class Pastry : public Product {
         std::string Specific;
         std::string FlavorProfile;
         static int closingHour;
 
     public:
 
-        Pastries(const int ID, const std::string& name, const std::string& flavor, const std::string& cream,
+        Pastry(const int ID, const std::string& name, const std::string& flavor, const std::string& cream,
         float weight_without_ornaments, float price_per_kg, const std::string& specific, const std::string& flavorProfile)
         : Product(ID, name, flavor, cream, weight_without_ornaments, price_per_kg),
           Specific(specific), FlavorProfile(flavorProfile) {}
@@ -178,31 +163,29 @@ std::vector<SeasonalSpecialCake> SeasonalSpecialCake::SeasonalCakeList {
             return Product::getProductID();
         }
 
+        [[nodiscard]] const std::string& getSpecific() const {
+            return Specific;
+        }
+
+        [[nodiscard]] const std::string& getFlavorProfile() const {
+            return FlavorProfile;
+        }
+
         [[nodiscard]] float FinalPrice() const override {
-            auto now = std::chrono::system_clock::now(); // Get the current hour
+            auto now = std::chrono::system_clock::now();
             std::time_t currentTime = std::chrono::system_clock::to_time_t(now);
             std::tm* localTime = std::localtime(&currentTime);
 
             int currentHour = localTime->tm_hour;
 
-            if (closingHour - currentHour == 1) {   // Apply discount if it's one hour before closing
+            if (closingHour - currentHour == 1) {
                 return basePrice * 0.5f; // 50% off
             }
-            return basePrice; // No discount
+            return basePrice;
         }
 
     };
-    int Pastries::closingHour = 20;
-
-std::vector<Pastries> PastriesList= {
-    Pastries(1, "Croissant", "Buttery", "Chocolate Cream", 50.0f, 10.0f, "French", "Flaky and buttery"),
-    Pastries(2, "Baguette", "Wheat", "Garlic&Butter", 20.0f, 2.0f, "French", "Crispy"),
-    Pastries(3, "Baklava", "Sweet", "Honey", 0.2f, 150.0f, "Turkish", "Nutty and sweet"),
-    Pastries(4, "Cinnamon Roll", "Cinnamon", "Cream Cheese Frosting", 0.25f, 120.0f, "American", "Soft, sweet, and spiced"),
-    Pastries(5, "Danish", "Fruity", "Cream cheese", 0.1f, 80.0f, "Danish", "Sweet and creamy"),
-    Pastries(6, "Eclair", "Vanilla", "Chocolate Glaze", 0.2f, 80.0f, "French", "Creamy and rich")
-};
-
+    int Pastry::closingHour = 20;
 
     // class WeddingCake: public Product {
     //     std::string ColourTheme;
@@ -211,525 +194,666 @@ std::vector<Pastries> PastriesList= {
     //     int tiers_number;
     //
     // };
-class SomeClass {
-public:
-    explicit SomeClass(int) {} /// This class is used to test that the memory leak checks work as expected even when using a GUI
-};
 
-SomeClass *getC() {
-    return new SomeClass{2};
-}
-//////////////////////////////////////////////////////////////////////
+#include <ctime>
 
 constexpr float WINDOW_WIDTH = 1280;
 constexpr float WINDOW_HEIGHT = 720;
+constexpr float BUTTON_WIDTH = 200;
+constexpr float BUTTON_HEIGHT = 200;
 
-// Function to create a button
+
 sf::RectangleShape createButton(float x, float y, float width, float height, sf::Color color) {
-
     sf::RectangleShape button(sf::Vector2f(width, height));
-
     button.setPosition(x, y);
     button.setFillColor(color);
     return button;
 }
 
-// Function to create a text object
+
 sf::Text createText(const std::string& content, sf::Font const& font, unsigned int size, sf::Color color, float x, float y) {
-
     sf::Text text(content, font, size);
-
     text.setFillColor(color);
     text.setPosition(x, y);
-
     return text;
 }
 
-// Load a texture and apply it to a sprite
+
 sf::Sprite createSprite(const std::string& imagePath, float x, float y) {
-
     sf::Texture texture;
-
     if (!texture.loadFromFile(imagePath)) {
         std::cerr << "Failed to load image: " << imagePath << '\n';
     }
     sf::Sprite sprite;
-
     sprite.setTexture(texture);
     sprite.setPosition(x, y);
-
     return sprite;
 }
 
-// Function to handle the main menu
-void displayMainMenu(sf::RenderWindow& window, sf::Font const& font) {
-    // Load background texture
-    sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("D:/BakeryOOP/assets/background.jpeg")) {
-        std::cerr << "Failed to load background image.\n";
-    }
-    sf::Sprite backgroundSprite(backgroundTexture);
-    backgroundSprite.setScale(0.3125f, 0.3125f);  // Scale the background sprite
 
-    // Create welcome text and its shadow
-    sf::Text welcomeText = createText("Welcome to Sweet Spell Bakery!", font, 50, sf::Color::White, 200, 50);
-    sf::Text welcomeShadow = welcomeText;
-    welcomeShadow.setFillColor(sf::Color(139, 69, 19));  // Brown shadow color
-    welcomeShadow.setPosition(welcomeText.getPosition().x + 5, welcomeText.getPosition().y + 5);
-
-    // Create the "Our Dessert Collection" button and its text
-    sf::RectangleShape viewButton = createButton(100, 300, 280, 100, sf::Color(255, 255, 255, 160));  // Semi-transparent white
-    sf::Text viewButtonText = createText("Our Dessert \n Collection", font, 25, sf::Color(139, 69, 19), 160, 310);
-
-    sf::Text viewButtonShadow = viewButtonText;
-    viewButtonShadow.setFillColor(sf::Color::White);  // White shadow color
-    viewButtonShadow.setPosition(viewButtonText.getPosition().x + 1, viewButtonText.getPosition().y + 3);
-
-        window.clear();
-        window.draw(backgroundSprite);
-
-        // Draw welcome text and its shadow
-        window.draw(welcomeShadow);
-        window.draw(welcomeText);
-
-        // Draw button and its text
-        window.draw(viewButton);
-        window.draw(viewButtonShadow);
-        window.draw(viewButtonText);
-
-        window.display();
-
-    // Event loop
-    while (window.isOpen()) {
-        sf::Event event{};
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            } else if (event.type == sf::Event::MouseButtonPressed) {
-                sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-                if (viewButton.getGlobalBounds().contains(mousePos)) {
-                    return;  // Exit the main menu and proceed to the dessert collection
-                }
-            }
-        }
-    }
-}
-
-
-void displayDessertCollection(sf::RenderWindow& window, sf::Font const& font) {
-    // Load background texture
-    sf::Texture backgroundTexturePage2;
-    if (!backgroundTexturePage2.loadFromFile("D:/BakeryOOP/assets/background2.jpeg")) {
-        std::cerr << "Failed to load background image.\n";
-    }
-    sf::Sprite backgroundPage2(backgroundTexturePage2);
-    backgroundPage2.setScale(0.3125f, 0.3125f);  // Scale the background sprite
-
-    // Create title text and its shadow
-    sf::Text pageTitle = createText("Discover the magic of our \n    Enchanted Desserts!", font, 50, sf::Color::White, 100, 50);
-    sf::Text pageTitleShadow = pageTitle;
-    pageTitleShadow.setFillColor(sf::Color(139, 69, 19));  // Brown shadow color
-    pageTitleShadow.setPosition(pageTitle.getPosition().x + 5, pageTitle.getPosition().y + 5);
-
-    // Define button properties
-    sf::RectangleShape cakesButton(sf::Vector2f(320, 70));
-    sf::RectangleShape specialCakesButton(sf::Vector2f(320, 70));
-    sf::RectangleShape pastriesButton(sf::Vector2f(320, 70));
-
-    cakesButton.setPosition(120, 300);
-    specialCakesButton.setPosition(120, 450);
-    pastriesButton.setPosition(120, 600);
-
-    cakesButton.setFillColor(sf::Color(0, 0, 0, 170));  // Semi-transparent black
-    specialCakesButton.setFillColor(sf::Color(0, 0, 0, 170));
-    pastriesButton.setFillColor(sf::Color(0, 0, 0, 170));
-
-    // Create button labels
-    sf::Text cakesText = createText("     Delicious Cakes", font, 20, sf::Color::White, 120, 320);
-    sf::Text specialCakesText = createText("     Special Seasonal Products", font, 20, sf::Color::White, 120, 470);
-    sf::Text pastriesText = createText("     Fresh Pastries", font, 20, sf::Color::White, 120, 620);
-
-    // Function to draw the UI elements
-        window.clear();
-        window.draw(backgroundPage2);
-
-        // Draw title and shadow
-        window.draw(pageTitleShadow);
-        window.draw(pageTitle);
-
-        // Draw buttons and their labels
-        window.draw(cakesButton);
-        window.draw(specialCakesButton);
-        window.draw(pastriesButton);
-        window.draw(cakesText);
-        window.draw(specialCakesText);
-        window.draw(pastriesText);
-
-        window.display();
-
-    // Event loop
-    while (window.isOpen()) {
-        sf::Event event{};
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            } else
-                if (event.type == sf::Event::MouseButtonPressed) {
-                    sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-
-                    if (cakesButton.getGlobalBounds().contains(mousePos)) {
-                        displayCakesPage(window, font);
-
-                    } else if (specialCakesButton.getGlobalBounds().contains(mousePos)) {
-                        displaySpecialCakesPage(window, font);
-
-                    } else if (pastriesButton.getGlobalBounds().contains(mousePos)) {
-
-                        displayPastriesPage(window, font);
-                    }
-            }
-        }
-    }
-}
-
-void displayCakeDetailsPage(sf::RenderWindow& window, sf::Font const& font, const Cakes& cake);
-
-void displayCakesPage(sf::RenderWindow& window,sf::Font const& font ) {
-
-
-    sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("D:/BakeryOOP/assets/PaginaCakes/background.jpeg")) {
-        std::cerr << "Failed to load background image.\n";
-    }
-    sf::Sprite backgroundSprite(backgroundTexture);
-    backgroundSprite.setScale(0.472f, 0.469f);  // Scale the background sprite
-
-    // Load cake textures and names
-
-    std::vector<sf::Texture> cakeTextures(Cakes::CakeList.size());
-    std::vector<sf::Sprite> cakeSprites(Cakes::CakeList.size());
-    std::vector<sf::Text> cakeTexts(Cakes::CakeList.size());
-
-    for (size_t i = 0; i < Cakes::CakeList.size(); ++i) {
-        if (!cakeTextures[i].loadFromFile("D:/BakeryOOP/assets/PaginaCakes/" + std::to_string(Cakes::CakeList[i].getID()) + ".jpeg")) {
-            std::cerr << "Failed to load image for " << Cakes::CakeList[i].getName() << ".\n";
+class ProductPage {
+protected:
+    sf::RectangleShape button;
+    sf::Text buttonText;
+    int basePosition = 300;
+    sf::Font font;
+    std::string title;
+    std::string assets;
+public:
+    ProductPage(int offsetX, int offsetY, const std::string& buttonText_) {
+        if (!font.loadFromFile("D:/BakeryOOP/assets/font/YujiMai.ttf")) {
+            std::cerr << "Failed to load font.\n";
+            exit(-1);
         }
 
-        // Set up the sprite for each cake
-        cakeSprites[i].setTexture(cakeTextures[i]);
-
-        if( i==0 ) cakeSprites[i].setScale(1.3f, 1.3f);
-        else
-            if( i==1 || i==2 ) cakeSprites[i].setScale(1.0f, 1.0f);
-            else
-                if( i==3 ) cakeSprites[i].setScale(0.8f, 0.8f);
-                else
-                    if( i==4) cakeSprites[i].setScale(0.55f, 0.55f);
-                    else
-                        if( i==5) cakeSprites[i].setScale(0.09f, 0.09f);
-
-        cakeSprites[i].setPosition(
-    100.0f + static_cast<float>(i % 3) * 450.0f,
-    50.0f + static_cast<float>(i) / 3.0f * 320.0f );
-
-
-
-        // Set up the text for each cake
-        if( i ==4 || i==5)
-        cakeTexts[i] = createText(Cakes::CakeList[i].getName(), font, 20, sf::Color::White,
-                                         cakeSprites[i].getPosition().x, cakeSprites[i].getPosition().y + 250);
-        else
-        cakeTexts[i] = createText(Cakes::CakeList[i].getName(), font, 20, sf::Color::White,
-                                  cakeSprites[i].getPosition().x+30, cakeSprites[i].getPosition().y + 250);
+        button = sf::RectangleShape(sf::Vector2f(320, 70));
+        button.setPosition(120, basePosition + 50);
+        button.setFillColor(sf::Color(0, 0, 0, 170));
+        buttonText.setString(buttonText_);
+        buttonText.setFont(font);
+        buttonText.setCharacterSize(20);
+        buttonText.setFillColor(sf::Color::White);
+        buttonText.setPosition(140, basePosition + 60);
+    }
+    std::string getTitle() const {
+        return title;
     }
 
-
-    window.draw(backgroundSprite);
-
-        for (size_t i = 0; i < cakeSprites.size(); ++i) {
-            window.draw(cakeSprites[i]);
-            window.draw(cakeTexts[i]);
-        }
-
-        window.display();
-
-    while (window.isOpen()) {
-        sf::Event event{};
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            } else if (event.type == sf::Event::MouseButtonPressed) {
-                sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-                for (size_t i = 0; i < cakeSprites.size(); ++i) {
-                    if (cakeSprites[i].getGlobalBounds().contains(mousePos)) {
-                        displayCakeDetailsPage(window, font, Cakes::CakeList[i]); // Display details for the clicked cake
-                    }
-                }
-            }
-        }
-
-    }
-    };
-
-
-void displayCakeDetailsPage(sf::RenderWindow& window, sf::Font const& font, const Cakes& cake) {
-    // Load the background texture based on the cake
-    sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("D:/BakeryOOP/assets/PaginaCakes/backgrounds/" + std::to_string(cake.getID()) + ".jpg") ) {
-        throw std::runtime_error("Failed to load background image");
+    std::string getButtonText() const {
+        return buttonText.getString();
     }
 
-    sf::RectangleShape textBackground;
-    textBackground.setPosition(80, 120); // Adjust position as needed
-    textBackground.setSize(sf::Vector2f(700, 500)); // Adjust size as needed
-
-    if( cake.getID() == 1)
-        textBackground.setFillColor(sf::Color(0, 0, 0, 130));
-    else if( cake.getID() == 2 || cake.getID() == 3 || cake.getID() == 5 )
-       textBackground.setFillColor(sf::Color(204, 153, 51, 130));
-    else if(cake.getID() == 4 || cake.getID() == 6)
-        textBackground.setFillColor(sf::Color(65, 43, 21, 230));
-
-    sf::Sprite backgroundSprite(backgroundTexture);
-    backgroundSprite.setScale(
-        static_cast<float>(window.getSize().x) / static_cast<float>(backgroundTexture.getSize().x),
-        static_cast<float>(window.getSize().y) / static_cast<float>(backgroundTexture.getSize().y)
-    );
-
-    window.clear();
-    window.draw(backgroundSprite);
-    window.draw(textBackground );
-
-    sf::Text detailsTitle;
-    if( cake.getID() == 1)
-        detailsTitle = createText(cake.getName(), font, 50, sf::Color::White, 400, 50);
-    else if( cake.getID() == 2 || cake.getID() == 3 || cake.getID() == 5 )
-        detailsTitle = createText(cake.getName(), font, 50,sf::Color(204, 153, 51), 400, 50);
-    else if(cake.getID() == 4 || cake.getID() == 6)
-         detailsTitle = createText(cake.getName(), font, 50, sf::Color(65, 43, 21), 170, 50);
-    window.draw(detailsTitle);
-        std::vector<sf::Text> details;
-
-        details.push_back(createText("Flavor Profile:     " + cake.getFlavorProfile(), font, 25, sf::Color::White, 100, 150));
-        details.push_back(createText("Cream:     " + cake.getCream(), font, 25, sf::Color::White, 100, 200));
-
-
-    // Format the weight to show 2 decimals
-    std::ostringstream ossWeight;
-    ossWeight << std::fixed << std::setprecision(2) << cake.getWeight();
-    details.push_back(createText("Weight:     " + ossWeight.str() + " kg", font, 25, sf::Color::White, 100, 250));
-    // Format the base price to show 2 decimals
-    std::ostringstream ossPrice;
-    ossPrice << std::fixed << std::setprecision(2) << cake.getBasePrice();
-    details.push_back(createText("Base Price (per kg):     " + ossPrice.str() +" ron", font, 25, sf::Color::White, 100, 350));
-
-    std::ostringstream ossOrnaments;
-    float yOffset = 390;
-
-    // Iterate through the ornaments and format their prices
-    for (const auto& ornament : cake.getOrnaments()) {
-        std::ostringstream priceStream;
-        priceStream << std::fixed << std::setprecision(2) << ornament.getPrice()*ornament.getPieceWeight();
-
-        details.push_back(createText("- " + ornament.getName() + ": " + priceStream.str() +"ron", font, 20, sf::Color::White, 120, yOffset));
-        yOffset += 30;
-    }
-    details.push_back(createText("Recommended to be consumed in maximum " + std::to_string(cake.getDaysFresh()) + "days ", font, 25, sf::Color::White, 100, 550));
-
-            for (const auto& detail : details) {
-                window.draw(detail);
-            }
-
-            window.display();
-
-        while (window.isOpen()) {
-            sf::Event event{};
-            while (window.pollEvent(event)) {
-                if (event.type == sf::Event::Closed) {
-                    window.close();
-                } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                    return; // Return to the previous page
-                }
-            }
-
-        }
-    };
-// Function to display Special Cakes page
-void displaySpecialCakesPage(sf::RenderWindow& window, sf::Font const& font) {
-    window.clear();
-sf::Texture backgroundTexture;
-if (!backgroundTexture.loadFromFile("D:/BakeryOOP/assets/PaginaSeasonalCakes/background2.jpg")) {
-    std::cerr << "Failed to load background image.\n";
-}
-sf::Sprite backgroundSprite(backgroundTexture);
-backgroundSprite.setScale(2.0f, 2.0f);  // Scale the background sprite
-
-// Load seasonal cake textures and names
-std::vector<sf::Texture> cakeTextures(SeasonalSpecialCake::SeasonalCakeList.size());
-std::vector<sf::Sprite> cakeSprites(SeasonalSpecialCake::SeasonalCakeList.size());
-std::vector<sf::Text> cakeTexts(SeasonalSpecialCake::SeasonalCakeList.size());
-
-for (size_t i = 0; i <SeasonalSpecialCake:: SeasonalCakeList.size(); ++i) {
-    if (!cakeTextures[i].loadFromFile("D:/BakeryOOP/assets/PaginaSeasonalCakes/" + std::to_string(SeasonalSpecialCake::SeasonalCakeList[i].getID()) + ".jpg")) {
-        std::cerr << "Failed to load image for " << SeasonalSpecialCake::SeasonalCakeList[i].getName() << ".\n";
+    std::string getAssets() const {
+        return assets;
     }
 
-    // Set up the sprite for each cake
-    cakeSprites[i].setTexture(cakeTextures[i]);
-    if (i == 0) cakeSprites[i].setScale(0.445f, 0.445f);  // 505x505
-    else if (i == 1) cakeSprites[i].setScale(0.197f, 0.197f);  // 1144x1144
-    else if (i == 2) cakeSprites[i].setScale(0.422f, 0.422f);  // 532x532
-    else if (i == 3) cakeSprites[i].setScale(0.417f, 0.417f);  // 540x540
-    else if (i == 4) cakeSprites[i].setScale(0.393f, 0.393f);  // 572x572
-    else if (i == 5) cakeSprites[i].setScale(0.255f, 0.255f);  // 881x881
-
-
-    cakeSprites[i].setPosition(
-    100.0f + static_cast<float>(i % 3) * 450.0f, // Floating-point arithmetic for horizontal positioning
-    50.0f + static_cast<float>(i) / 3.0f * 320.0f // Explicit floating-point division for vertical positioning
-);
-
-
-    // Set up the text for each cake
-    if (i==3 || i == 4 || i == 5)
-        cakeTexts[i] = createText(SeasonalSpecialCake::SeasonalCakeList[i].getName(), font, 20, sf::Color::White,
-                                  cakeSprites[i].getPosition().x, cakeSprites[i].getPosition().y + 250);
-    else
-        cakeTexts[i] = createText(SeasonalSpecialCake::SeasonalCakeList[i].getName(), font, 20, sf::Color::White,
-                                  cakeSprites[i].getPosition().x + 30, cakeSprites[i].getPosition().y + 250);
-}
-
-window.draw(backgroundSprite);
-
-for (size_t i = 0; i < cakeSprites.size(); ++i) {
-    window.draw(cakeSprites[i]);
-    window.draw(cakeTexts[i]);
-}
-
-window.display();
-
-while (window.isOpen()) {
-    sf::Event event{};
-    while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            window.close();
-        } else if (event.type == sf::Event::MouseButtonPressed) {
-          //  sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-       //     for (size_t i = 0; i < cakeSprites.size(); ++i) {
-              //  if (cakeSprites[i].getGlobalBounds().contains(mousePos)) {
-                 //   displayCakeDetailsPage(window, font, SeasonalCakes[i]); // Display details for the clicked cake
-                }
-            }
-        }
+    virtual bool isClicked(sf::RenderWindow& window) {
+        return button.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+    }
 
 };
 
-// Function to display Pastries page
-void displayPastriesPage(sf::RenderWindow& window,sf::Font const& font) {
 
-        window.clear();
+class CakePage : public ProductPage {
+public:
+    CakePage(int offsetX, int offsetY, const std::string& buttonText_) : ProductPage(offsetX, offsetY, buttonText_) {
+        assets = "D:/BakeryOOP/assets/PaginaCakes/";
+    }
+};
 
-        sf::Texture backgroundTexture;
-        if (!backgroundTexture.loadFromFile("D:/BakeryOOP/assets/PaginaPastries/background.jpg")) {
-            std::cerr << "Failed to load background image.\n";
+class PastryPage : public ProductPage {
+public:
+    PastryPage(int offsetX, int offsetY, const std::string& buttonText_) : ProductPage(offsetX, offsetY, buttonText_) {
+        assets = "D:/BakeryOOP/assets/PaginaPastries/";
+    }
+};
+
+class SeasonalCakePage : public ProductPage {
+public:
+    SeasonalCakePage(int offsetX, int offsetY, const std::string& buttonText_) : ProductPage(offsetX, offsetY, buttonText_) {
+        assets = "D:/BakeryOOP/assets/PaginaSeasonalCakes/";
+    }
+
+    };
+
+    class ProductFactory {
+        std::vector<std::shared_ptr<Product>> products;
+        ProductPage* productPage;
+    public:
+        virtual std::vector<std::shared_ptr<Product>> getProducts() = 0;
+        virtual ProductPage* getProductPage() = 0;
+        virtual ~ProductFactory() = default;
+    };
+
+    class CakeFactory : public ProductFactory {
+    public:
+        std::vector<std::shared_ptr<Product>> getProducts() override {
+            std::vector<std::shared_ptr<Product>> products;
+
+            products.push_back(std::make_shared<Cakes>(createChocolateCake()));
+            products.push_back(std::make_shared<Cakes>(createCheesecake()));
+            products.push_back(std::make_shared<Cakes>(createLemonCake()));
+            products.push_back(std::make_shared<Cakes>(createForestFruitCake()));
+            products.push_back(std::make_shared<Cakes>(createStrawberryShortcake()));
+            products.push_back(std::make_shared<Cakes>(createCoffeeWalnutCake()));
+
+            return products;
         }
 
-        sf::Sprite backgroundSprite(backgroundTexture);
-        backgroundSprite.setScale(2.0f, 2.0f);
 
-        // Load pastry textures and names
-        std::vector<sf::Texture> pastryTextures(PastriesList.size());
-        std::vector<sf::Sprite> pastrySprites(PastriesList.size());
-        std::vector<sf::Text> pastryTexts(PastriesList.size());
-
-        for (size_t i = 0; i < PastriesList.size(); ++i) {
-            if (!pastryTextures[i].loadFromFile("D:/BakeryOOP/assets/PaginaPastries/" + std::to_string(PastriesList[i].getID()) + ".jpg")) {
-                std::cerr << "Failed to load image for " << PastriesList[i].getName() << ".\n";
-            }
-
-            // Set up the sprite for each pastry
-            pastrySprites[i].setTexture(pastryTextures[i]);
-            if (i == 0) pastrySprites[i].setScale(0.445f, 0.445f);  // 505x505
-            else if (i == 1) pastrySprites[i].setScale(0.197f, 0.197f);  // 1144x1144
-            else if (i == 2) pastrySprites[i].setScale(0.422f, 0.422f);  // 532x532
-            else if (i == 3) pastrySprites[i].setScale(0.417f, 0.417f);  // 540x540
-            else if (i == 4) pastrySprites[i].setScale(0.393f, 0.393f);  // 572x572
-            else if (i == 5) pastrySprites[i].setScale(0.255f, 0.255f);  // 881x881
-
-            pastrySprites[i].setPosition(
-            100.0f + static_cast<float>(i % 3) * 450.0f,
-            50.0f + static_cast<float>(i) / 3.0f * 320.0f );
-
-
-            if (i == 3 || i == 4 || i == 5)
-                pastryTexts[i] = createText(PastriesList[i].getName(), font, 20, sf::Color::White,
-                                            pastrySprites[i].getPosition().x, pastrySprites[i].getPosition().y + 250);
-            else
-                pastryTexts[i] = createText(PastriesList[i].getName(), font, 20, sf::Color::White,
-                                            pastrySprites[i].getPosition().x + 30, pastrySprites[i].getPosition().y + 250);
+        ProductPage* getProductPage() override {
+            std::cout << "Creating Cake Page\n";
+            return new CakePage(0, 0, "Cakes");
         }
 
-        window.draw(backgroundSprite);
-
-        for (size_t i = 0; i < pastrySprites.size(); ++i) {
-            window.draw(pastrySprites[i]);
-            window.draw(pastryTexts[i]);
+        static Cakes createChocolateCake() {
+            return {1, "Chocolate Cake", "Chocolate", "Chocolate Ganache", 3.0f, 80, "Rich and Velvety", "Chocolate Drip with Truffles", 4, ChocolateOrnaments};
         }
 
-        window.display();
+        static Cakes createCheesecake() {
+            return {2, "Cheesecake", "Biscuit", "Cream Cheese", 2.0f, 70, "Creamy and Smooth", "Fruit Glaze with Fresh Berries", 3, CheesecakeOrnaments};
+        }
 
-        while (window.isOpen()) {
-            sf::Event event{};
-            while (window.pollEvent(event)) {
-                if (event.type == sf::Event::Closed) {
-                    window.close();
-                } else if (event.type == sf::Event::MouseButtonPressed) {
-               //     sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-                }
-            }
-}
+        static Cakes createLemonCake() {
+            return {3, "Lemon Cake", "Vanilla with Lemon", "Lemon Frosting", 2.5f, 80, "Citrusy and Light", "Piped Lemon Frosting", 4, LemonOrnaments};
+        }
+
+        static Cakes createForestFruitCake() {
+            return {4, "Forest Fruit Cake", "Chocolate", "Whipped Cream", 2.0f, 85, "Berry Explosion", "Chocolate Shards with Fresh Fruit", 4, ForestFruitOrnaments};
+        }
+
+        static Cakes createStrawberryShortcake() {
+            return {5, "Strawberry Shortcake", "Vanilla", "Whipped Cream", 3.0f, 90, "Sweet and Fruity", "Whipped Cream and Fresh Strawberries", 3, StrawberryShortcakeOrnaments};
+        }
+
+        static Cakes createCoffeeWalnutCake() {
+            return {6, "Coffee Walnut Cake", "Coffee&Cacao", "Walnut Cream", 3.0f, 90, "Bold and Nutty", "Elegant Coffee Frosting with Walnut Garnish", 4, CoffeeWalnutOrnaments};
+        }
+    };
+
+    class PastryFactory : public ProductFactory {
+    public:
+        std::vector<std::shared_ptr<Product>> getProducts() override {
+            std::vector<std::shared_ptr<Product>> products;
+            products.push_back(std::make_shared<Pastry>(createCroissant()));
+            products.push_back(std::make_shared<Pastry>(createBaguette()));
+            products.push_back(std::make_shared<Pastry>(createBaklava()));
+            products.push_back(std::make_shared<Pastry>(createCinnamonRoll()));
+            products.push_back(std::make_shared<Pastry>(createDanish()));
+            products.push_back(std::make_shared<Pastry>(createEclair()));
+
+            return products;
+        }
+
+        ProductPage* getProductPage() override {
+            std::cout << "Creating Pastry Page\n";
+            return new PastryPage(0, 0, "Pastries");
+        }
+
+        static Pastry createCroissant() {
+            return {1, "Croissant", "Buttery", "Chocolate Cream", 0.0f, 100.0f, "French", "Flaky and buttery"};
+        }
+
+        static Pastry createBaguette() {
+            return {2, "Baguette", "Wheat", "Garlic&Butter", 0.40f, 40.0f, "French", "Crispy"};
+        }
+
+        static Pastry createBaklava() {
+            return {3, "Baklava", "Sweet", "Honey", 0.2f, 150.0f, "Turkish", "Nutty and sweet"};
+        }
+
+        static Pastry createCinnamonRoll() {
+            return {4, "Cinnamon Roll", "Cinnamon", "Cream Cheese Frosting", 0.25f, 120.0f, "American", "Soft, sweet, and spiced"};
+        }
+
+        static Pastry createDanish() {
+            return {5, "Danish", "Fruity", "Cream cheese", 0.1f, 80.0f, "Danish", "Sweet and creamy"};
+        }
+
+        static Pastry createEclair() {
+            return {6, "Eclair", "Vanilla", "Chocolate Glaze", 0.2f, 80.0f, "French", "Creamy and rich"};
+        }
+
+    };
+
+    class SeasonalCakeFactory : public ProductFactory {
+    public:
+
+        std::vector<std::shared_ptr<Product>> getProducts() override {
+            std::vector<std::shared_ptr<Product>> products;
+            products.push_back(std::make_shared<SeasonalSpecialCake>(createChristmasCake()));
+            products.push_back(std::make_shared<SeasonalSpecialCake>(createEasterCake()));
+            products.push_back(std::make_shared<SeasonalSpecialCake>(createHalloweenCake()));
+            products.push_back(std::make_shared<SeasonalSpecialCake>(createValentinesCake()));
+            products.push_back(std::make_shared<SeasonalSpecialCake>(createMothersDayCake()));
+            products.push_back(std::make_shared<SeasonalSpecialCake>(createNewYearCake()));
+            return products;
+        }
+
+
+        ProductPage* getProductPage() override {
+            std::cout << "Creating Seasonal Cake Page\n";
+            return new SeasonalCakePage(0, 0, "Seasonals");
+        }
+
+        static SeasonalSpecialCake createChristmasCake() {
+            return {1, "Christmas Special", "Vanilla", "Buttercream", 2.0f, 150.0f, "Winter", "2024-12-24", "Merry Christmas!"};
+        }
+
+        static SeasonalSpecialCake createEasterCake() {
+            return {4, "Easter Special", "Carrot", "Cream Cheese", 1.5f, 120.0f, "Spring", "2024-04-20", "Happy Easter!"};
+        }
+
+        static SeasonalSpecialCake createNewYearCake() {
+            return {3, "New Year's Special", "Chocolate", "Ganache", 2.0f, 150.0f, "Winter", "2024-12-30", "Happy New Year!"};
+        }
+
+        static SeasonalSpecialCake createValentinesCake() {
+            return {2, "Valentine's Day Special", "Red Velvet", "Cream Cheese", 1.9f, 90.0f, "Winter", "2024-02-14", "Happy Valentine's Day!"};
+        }
+
+        static SeasonalSpecialCake createMothersDayCake() {
+            return {5, "Mother's Day Special", "Mango", "Coconut Cream", 1.5f, 110.0f, "Spring", "2024-03-08", "Happy Mother's Day!"};
+        }
+
+        static SeasonalSpecialCake createHalloweenCake() {
+            return {6, "Halloween Special", "Pumpkin", "Spiced Cream", 2.0f, 140.0f, "Autumn", "2024-10-31", "Happy Halloween!"};
+        }
 
     };
 
 
-void printCurrentDateTime() {
-    // Get the current time
-    auto now = std::chrono::system_clock::now();
+class Menu {
+    std::vector<ProductFactory*> factories;
+    std::vector<ProductPage*> pages;
+    ClientBuilder clientBuilder;
+    OrderBuilder orderBuilder;
+    Order order;
+    sf::RenderWindow window;
+    sf::Font font;
 
-    // Convert to time_t to work with calendar times
-    std::time_t currentTime = std::chrono::system_clock::to_time_t(now);
+    std::vector<sf::RectangleShape> buttons;
+    std::vector<sf::Text> buttonTexts;
 
-    // Convert to a tm structure
-    std::tm* localTime = std::localtime(&currentTime);
+public:
+    Menu(){
+        window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Dessert Collection");
 
-    // Print the date and time
-    std::cout << "Current Date and Time: ";
-    std::cout << std::put_time(localTime, "%Y-%m-%d %H:%M:%S") << '\n';
-};
+        factories.push_back(new CakeFactory);
+        factories.push_back(new PastryFactory);
+        factories.push_back(new SeasonalCakeFactory);
 
-    int main(){
-        sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Sweet Spell Bakery");
-        sf::Font font;
+        for (auto factory: factories) {
+            ProductPage *page = factory->getProductPage();
+            if (page) {
+                pages.push_back(page);
+            }
+        }
 
         if (!font.loadFromFile("D:/BakeryOOP/assets/font/YujiMai.ttf")) {
             std::cerr << "Failed to load font.\n";
-            return -1;
+            exit(-1);
         }
-
-        displayMainMenu(window, font);
-        displayDessertCollection(window, font);
-
-        init_threads(); // NOTE: this function call is needed for environment-specific fixes
-        Helper helper;
-        helper.help();
-
-        /// This is needed so we do not burn the GPU
-        window.setVerticalSyncEnabled(true);
-
-
-        printCurrentDateTime();
-
-
-        return 0;
     }
 
+
+    void displayWelcomePage() {
+
+        sf::Texture backgroundTexture;
+        if (!backgroundTexture.loadFromFile("D:/BakeryOOP/assets/background.jpeg")) {
+            std::cerr << "Failed to load background image.\n"; }
+
+        sf::Sprite backgroundSprite(backgroundTexture);
+        backgroundSprite.setScale(0.3125f, 0.3125f);
+
+        sf::Text welcomeText = createText("Welcome to Sweet Spell Bakery!", font, 50, sf::Color::White, 200, 50);
+
+        sf::Text welcomeShadow = welcomeText;
+        welcomeShadow.setFillColor(sf::Color(139, 69, 19));
+        welcomeShadow.setPosition(welcomeText.getPosition().x + 5, welcomeText.getPosition().y + 5);
+
+        sf::RectangleShape button = createButton(100, 300, 280, 100, sf::Color(255, 255, 255, 160));
+        sf::Text buttonText = createText("Our Dessert \n Collection", font, 25, sf::Color(139, 69, 19), 160, 310);
+
+        sf::Text buttonShadow = buttonText;
+        buttonShadow.setFillColor(sf::Color::White);
+        buttonShadow.setPosition(buttonText.getPosition().x + 1, buttonText.getPosition().y + 3);
+
+        while (window.isOpen()) {
+            sf::Event event;
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed) {
+                    window.close();
+                }
+
+                if (event.type == sf::Event::MouseButtonPressed) {
+                    if (button.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+                        std::cout << "Button clicked! Transitioning to Menu Page...\n";
+                        displayMenuPage();
+                    }
+                }
+            }
+
+            window.clear();
+            window.draw(backgroundSprite);
+
+            window.draw(welcomeShadow);
+            window.draw(welcomeText);
+
+
+            window.draw(button);
+            window.draw(buttonShadow);
+            window.draw(buttonText);
+
+            window.display();
+        }
+    }
+    void displayOrderPage(const Order& order) {
+
+
+    buttons.clear();
+    buttonTexts.clear();
+
+
+    sf::Texture backgroundTexture;
+    if (!backgroundTexture.loadFromFile("D:/BakeryOOP/assets/backgroundBasket.jpg")) {
+        std::cerr << "Failed to load background image.\n";
+        return;
+    }
+    sf::Sprite backgroundSprite(backgroundTexture);
+
+
+    sf::Text pageTitle = createText("Your Order", font, 50, sf::Color(0,0,0), 130, 50);
+
+    int yPos = 150;
+
+
+        const auto& orderedProducts = order.getOrderedProducts();
+
+
+        if (orderedProducts.empty()) {
+            sf::Text emptyText = createText("Your order is empty.", font, 30, sf::Color::Red, 100, yPos);
+            window.draw(emptyText);
+        } else {
+            for (const auto& product : orderedProducts) {
+                if (product != nullptr) {
+                    sf::Text productText;
+                    productText.setFont(font);
+                    productText.setString(product->getProductName());
+                    productText.setCharacterSize(25);
+                    productText.setFillColor(sf::Color::Black);
+                    productText.setPosition(100, yPos);
+
+                    window.draw(productText);
+                    yPos += 40; // Mută poziția pentru următorul produs
+                }
+            }
+        }
+
+
+    sf::RectangleShape finishButton(sf::Vector2f(320, 70));
+    finishButton.setPosition(120, 500);
+    finishButton.setFillColor(sf::Color(0, 0, 0, 200));
+    buttons.push_back(finishButton);
+
+
+    sf::Text finishButtonText;
+    finishButtonText.setString("Finish Order");
+    finishButtonText.setFont(font);
+    finishButtonText.setCharacterSize(20);
+    finishButtonText.setFillColor(sf::Color::White);
+    finishButtonText.setPosition(140, 520);
+    buttonTexts.push_back(finishButtonText);
+
+
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+
+            if (event.type == sf::Event::MouseButtonPressed) {
+
+                if (buttons.back().getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+                    std::cout << "Finish Order clicked!" << std::endl;
+
+                    return;
+                }
+            }
+        }
+
+        window.clear();
+        window.draw(backgroundSprite);
+        window.draw(pageTitle);
+
+        for (size_t i = 0; i < buttons.size(); ++i) {
+            window.draw(buttons[i]);
+            window.draw(buttonTexts[i]);
+        }
+
+        window.display();
+    }
+}
+
+    void displayMenuPage() {
+
+        sf::Texture backgroundTexturePage2;
+        if (!backgroundTexturePage2.loadFromFile("D:/BakeryOOP/assets/background2.jpeg")) {
+            std::cerr << "Failed to load background image.\n";
+        }
+        sf::Sprite backgroundPage2(backgroundTexturePage2);
+        backgroundPage2.setScale(0.3125f, 0.3125f);
+
+
+        sf::Text pageTitle = createText("Discover the magic of our \n    Enchanted Desserts!", font, 50, sf::Color::White, 100, 50);
+        sf::Text pageTitleShadow = pageTitle;
+        pageTitleShadow.setFillColor(sf::Color(139, 69, 19));
+        pageTitleShadow.setPosition(pageTitle.getPosition().x + 5, pageTitle.getPosition().y + 5);
+
+
+        buttons.clear();
+        buttonTexts.clear();
+
+        int yPos = 300;
+        for (auto& factory : factories) {
+            if (factory != nullptr) {
+                ProductPage* page = factory->getProductPage();
+                if (page != nullptr) {
+
+                    sf::RectangleShape button(sf::Vector2f(320, 70));
+                    button.setPosition(120, yPos);
+                    button.setFillColor(sf::Color(0, 0, 0, 170));
+                    buttons.push_back(button);
+
+
+                    sf::Text buttonText;
+                    buttonText.setString(page->getButtonText());
+                    buttonText.setFont(font);
+                    buttonText.setCharacterSize(20);
+                    buttonText.setFillColor(sf::Color::White);
+                    buttonText.setPosition(140, yPos + 20);
+                    buttonTexts.push_back(buttonText);
+
+
+                    yPos += 100;
+                }
+            }
+        }
+        sf::RectangleShape buttonBasket(sf::Vector2f(120, 120));
+        buttonBasket.setPosition(1050, 50);
+        sf::Texture textureBasket;
+
+        if (textureBasket.loadFromFile("D:/BakeryOOP/assets/cos.jpg")) {
+            buttonBasket.setTexture(&textureBasket);
+        } else {
+            std::cerr << "Failed to load image for basket"  << "\n";
+        }
+        while (window.isOpen()) {
+            sf::Event event;
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed) {
+                    window.close();
+                }
+
+                if (event.type == sf::Event::MouseButtonPressed) {
+
+                    for (size_t i = 0; i < buttons.size(); ++i) {
+                        if (buttons[i].getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+                            displayProductPage(i);
+                        }
+                    }
+
+                    if (buttonBasket.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+                        std::cout << "Navigating to the order page...\n";
+                        displayOrderPage(order);
+                    }
+                }
+            }
+
+
+
+            window.clear();
+            window.draw(backgroundPage2);
+            window.draw(pageTitleShadow);
+            window.draw(pageTitle);
+
+            for (size_t i = 0; i < buttons.size(); ++i) {
+                window.draw(buttons[i]);
+                window.draw(buttonTexts[i]);
+            }
+            window.draw(buttonBasket);
+            window.display();
+
+        }
+    }
+    void displayProductPage(int index) {
+        if (index >= 0 && index < factories.size() && factories[index] != nullptr) {
+
+            std::vector<sf::RectangleShape> buttons;
+            std::vector<sf::Text> buttonLabels;
+
+            ProductPage* page = factories[index]->getProductPage();
+            if (page == nullptr) {
+                std::cerr << "Error: Product page is null.\n";
+                return;
+            }
+
+            std::vector<std::shared_ptr<Product>> products = factories[index]->getProducts();
+            if (products.empty()) {
+                std::cerr << "Error: No products available in the factory.\n";
+                return;
+            }
+
+            for (const auto& product : products) {
+                if (product == nullptr) {
+                    std::cerr << "Error: Found a null product.\n";
+                    continue;
+                }
+            }
+
+            sf::Texture backgroundTexture;
+            if (!backgroundTexture.loadFromFile(page->getAssets() + "background.jpg")) {
+                std::cerr << "Failed to load background image.\n";
+                return;
+            }
+            sf::Sprite backgroundSprite(backgroundTexture);
+
+            float horizontalSpacing = (WINDOW_WIDTH - 3 * BUTTON_WIDTH) / 4;
+            float verticalSpacing = (WINDOW_HEIGHT - 2 * BUTTON_HEIGHT) / 3;
+            std::cout<<"bbb"<<std::endl;
+            std::vector<sf::Texture> textures;
+            for (size_t i = 0; i < products.size(); ++i) {
+                sf::Texture texture;
+                textures.push_back(backgroundTexture);
+            }
+
+            for (size_t i = 0; i < products.size(); ++i) {
+
+                if (products[i] == nullptr) {
+                    std::cerr << "Product at index " << i << " is null!\n";
+                    continue;
+                }
+                std::cout<<i<<std::endl;
+
+                size_t row = i / 3;
+                size_t col = i % 3;
+
+
+                float posX = horizontalSpacing + col * (BUTTON_WIDTH + horizontalSpacing);
+                float posY = verticalSpacing + row * (BUTTON_HEIGHT + verticalSpacing);
+
+                sf::RectangleShape button(sf::Vector2f(BUTTON_WIDTH, BUTTON_HEIGHT));
+                button.setPosition(posX, posY);
+
+                if (textures[i].loadFromFile(page->getAssets() + std::to_string(products[i]->getProductID()) + ".jpg")) {
+                    button.setTexture(&textures[i]);
+                    std::cout << page->getAssets() + std::to_string(products[i]->getProductID()) + ".jpg" << std::endl;
+                } else {
+                    std::cerr << "Failed to load image for " << products[i]->getProductName() << "\n";
+                }
+
+                buttons.push_back(button);
+                std::cout<<i<< " " <<i<<std::endl;
+
+                sf::Text label(products[i]->getProductName(), font, 20);
+                label.setFillColor(sf::Color::White);
+                label.setPosition(posX + 10, posY + BUTTON_HEIGHT + 5);
+                buttonLabels.push_back(label);
+            }
+            std::vector<std::shared_ptr<Product>> orderedProduct;
+
+            while (window.isOpen()) {
+                sf::Event event;
+                while (window.pollEvent(event)) {
+                    if (event.type == sf::Event::Closed) {
+
+                        window.close();
+                    }
+
+                    if (event.type == sf::Event::MouseButtonPressed) {
+                        for (size_t i = 0; i < buttons.size(); ++i) {
+                            if (buttons[i].getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+
+                                if (i < products.size() && products[i] != nullptr) {
+
+                                    orderBuilder.addProduct(products[i]);
+                                    return;
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+
+                window.clear(sf::Color::Black);
+                window.draw(backgroundSprite);
+                for (auto& label : buttonLabels) {
+                    window.draw(label);
+                }
+                for (auto& button : buttons) {
+                    window.draw(button);
+                }
+                window.display();
+            }
+        } else {
+            std::cerr << "Invalid factory index or null factory pointer.\n";
+        }
+    }
+
+    void run() {
+        displayWelcomePage();
+    }
+
+};
+
+void printCurrentDateTime() {
+
+    auto now = std::chrono::system_clock::now();
+
+
+    std::time_t currentTime = std::chrono::system_clock::to_time_t(now);
+
+    std::tm* localTime = std::localtime(&currentTime);
+
+    std::cout << "Current Date and Time: ";
+    std::cout << std::put_time(localTime, "%Y-%m-%d %H:%M:%S") << '\n';
+}
+
+
+int main() {
+    sf::Font font;
+
+    if (!font.loadFromFile("D:/BakeryOOP/assets/font/YujiMai.ttf")) {
+        std::cerr << "Failed to load font.\n";
+        return -1;
+    }
+
+    Menu menu;
+    menu.run();
+    printCurrentDateTime();
+
+
+    return 0;
+}
