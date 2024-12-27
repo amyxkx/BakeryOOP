@@ -54,6 +54,7 @@ endif()
 add_executable(${PROJECT_NAME}
         main.cpp
         generated/src/Helper.cpp
+        generated/include/Helper.h
         env_fixes.h
         Ornament.cpp
         Ornament.h
