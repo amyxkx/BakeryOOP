@@ -49,8 +49,6 @@ endif()
 
 ###############################################################################
 
-include_directories(${CMAKE_BINARY_DIR}/generated/include)
-include_directories(${CMAKE_BINARY_DIR}/generated/src)
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${PROJECT_NAME}
