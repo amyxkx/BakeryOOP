@@ -54,9 +54,9 @@ include_directories(${CMAKE_BINARY_DIR}/generated/include)
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${PROJECT_NAME}
-    main.cpp
-    generated/src/Helper.cpp
-    env_fixes.h
+        main.cpp
+        generated/src/Helper.cpp
+        env_fixes.h
         Ornament.cpp
         Ornament.h
         Product.cpp
@@ -94,7 +94,7 @@ include(cmake/CompilerFlags.cmake)
 ###############################################################################
 
 # use SYSTEM so cppcheck and clang-tidy do not report warnings from these directories
-target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE generated/include)
+target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE cmake-build-debug/generated/include)
 # target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ext/<SomeHppLib>/include)
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${SFML_SOURCE_DIR}/include)
 target_link_directories(${PROJECT_NAME} PRIVATE ${SFML_BINARY_DIR}/lib)

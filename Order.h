@@ -8,14 +8,13 @@
 #include "Ornament.h"
 
 class Order {
-    int OrderID;
     std::string DateOfDelivery;
     std::string paymentMethod;
     static int orderCounter;
     Client client;
     std::vector<std::shared_ptr<Product>>  orderedProduct;
 public:
-    Order( int ID, std::string Date, std::string payment, Client client );
+    Order( std::string Date, std::string payment, Client client );
 
     Order() = default;
 
@@ -23,13 +22,9 @@ public:
 
     Order& operator=(const Order& other);
 
-    int getOrderID() const;
     const std::string& getDateOfDelivery() const;
     const std::string& getPayment() const;
-    void addProduct( std::shared_ptr<Product> PointerProduct);
-
-    float orderFinalPrice() const;
-
+    void addProduct( const std::shared_ptr<Product>& PointerProduct);
 
     void clearOrder();
 
