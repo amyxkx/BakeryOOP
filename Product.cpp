@@ -1,18 +1,20 @@
 #include "Product.h"
 
-// Constructor implementations
+
 Product::Product(int ID, const std::string& name, const std::string& flv, const std::string& cr, float w, float price)
     : productID(ID), productName(name), flavor(flv), cream(cr), weight(w), basePrice(price) {}
 
 Product::Product(float price)
     : productID(0), productName(""), flavor(""), cream(""), weight(0), basePrice(price) {}
 
-// FinalPrice implementation
-float Product::FinalPrice() const {
-    return basePrice;
+float Product::getBasePrice() const {
+    return basePrice*weight;
 }
 
-// Clone function implementation (this is abstract, so it might return nullptr)
+float Product::FinalPrice() const {
+    return basePrice*weight;
+}
+
 std::shared_ptr<Product> Product::clone() const {
     return nullptr;
 }
@@ -38,6 +40,3 @@ float Product::getWeight() const {
     return weight;
 }
 
-float Product::getBasePrice() const {
-    return basePrice;
-}

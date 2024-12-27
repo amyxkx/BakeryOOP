@@ -50,6 +50,8 @@ endif()
 ###############################################################################
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mconsole")
 
+include_directories(${CMAKE_BINARY_DIR}/generated/include)
+
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${PROJECT_NAME}
     main.cpp
@@ -64,7 +66,28 @@ add_executable(${PROJECT_NAME}
         Client.cpp
         Client.h
         EroareInput.h
-        EroareNumarTelefon.h
+        EroriIntroducereDate.h
+        Cakes.cpp
+        Cakes.h
+        SeasonalSpecialCakes.cpp
+        SeasonalSpecialCakes.h
+        Pastry.cpp
+        Pastry.h
+        ProductPage.cpp
+        ProductPage.h
+        CakeFactory.h
+        PastryFactory.cpp
+        PastryFactory.h
+        SeasonalCakeFactory.cpp
+        SeasonalCakeFactory.h
+        ProductFactory.cpp
+        ProductFactory.h
+        CakePage.cpp
+        CakePage.h
+        PastryPage.cpp
+        PastryPage.h
+        SeasonalCakePage.cpp
+        SeasonalCakePage.h
 )
 include(cmake/CompilerFlags.cmake)
 

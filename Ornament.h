@@ -5,16 +5,14 @@
 #include <ostream>
 #include <vector>
 
-
 class Ornament {
     std::string name;
     std::string amountType;
-    float amount;
     float weight_piece;
     float price;
 
 public:
-    Ornament( std::string n, std::string amntType, float amnt, float w_piece, float p) ;
+    Ornament( std::string n, std::string amntType, float w_piece, float p) ;
 
     Ornament( const Ornament& other) ;
 
@@ -24,15 +22,13 @@ public:
 
     [[nodiscard]] std::string getAmountType() const;
 
-    [[nodiscard]] float getAmount() const;
-
     [[nodiscard]] float getPieceWeight() const;
 
     [[nodiscard]] float getPrice() const;
 
 
 
-    friend std::ostream& operator<<(std::ostream&os, const Ornament& ornm);
+friend std::ostream& operator<<(std::ostream&os, const Ornament& ornm);
 };
 extern std::vector<Ornament> ChocolateOrnaments;
 extern std::vector<Ornament> CheesecakeOrnaments;
