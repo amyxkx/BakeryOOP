@@ -6,6 +6,8 @@
 #include "SeasonalCakePage.h"
 #include <memory>
 #include <vector>
+#include <iostream>
+
 class SeasonalCakeFactory : public ProductFactory {
     public:
 

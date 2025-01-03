@@ -12,7 +12,7 @@ class Client {
     std::string OrderAddress;
     std::string EmailAddress;
 
-    void valideazaNume(const std::string& nume) {
+    static void valideazaNume(const std::string& nume) {
         if (nume.length() < 2) {
             throw EroareNumeInvalid();
         }
@@ -22,7 +22,7 @@ class Client {
             }
         }
     }
-    void valideazaEmail(const std::string& email) {
+    static void valideazaEmail(const std::string& email) {
         const std::regex pattern(R"(^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$)");
         if (!std::regex_match(email, pattern)) {
             throw EroareEmailInvalid();

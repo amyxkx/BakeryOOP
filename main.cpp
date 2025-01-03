@@ -329,16 +329,16 @@ void displayDetailsPage() {
                         }
 
                         EroareNumeInvalid numeValidator;
-                        numeValidator.valideazaNume(nameInput);
+                        EroareNumeInvalid::valideazaNume(nameInput);
 
                         EroareTelefonInvalid telefonValidator;
-                        telefonValidator.valideazaTelefon(phoneInput);
+                        EroareTelefonInvalid::valideazaTelefon(phoneInput);
 
                         EroareEmailInvalid emailValidator;
-                        emailValidator.valideazaEmail(emailInput);
+                        EroareEmailInvalid::valideazaEmail(emailInput);
 
                         EroareDataInvalida dataValidator;
-                        dataValidator.valideazaData(dateInput);
+                        EroareDataInvalida::valideazaData(dateInput);
 
                         isFormValid = true;
                         errorMessage.setString("");
