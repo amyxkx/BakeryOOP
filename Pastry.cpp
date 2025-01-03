@@ -14,10 +14,6 @@ int Pastry::getID() const {
     return Product::getProductID();
 }
 
-const std::string& Pastry::getSpecific() const {
-    return Specific;
-}
-
 const std::string& Pastry::getFlavorProfile() const {
     return FlavorProfile;
 }
@@ -28,7 +24,7 @@ float Pastry::FinalPrice() const {
 
     auto now = std::chrono::system_clock::now();
     std::time_t currentTime = std::chrono::system_clock::to_time_t(now);
-    std::tm* localTime = std::localtime(&currentTime);
+    const std::tm* localTime = std::localtime(&currentTime);
 
     int currentHour = localTime->tm_hour;
 

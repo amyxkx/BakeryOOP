@@ -18,13 +18,13 @@ Order& Order::operator=(const Order &other) {
 }
 
 
-[[nodiscard]] const std::string& Order::getDateOfDelivery() const {
-    return DateOfDelivery;
-}
-
-[[nodiscard]] const std::string& Order::getPayment() const {
-    return paymentMethod;
-}
+// [[nodiscard]] const std::string& Order::getDateOfDelivery() const {
+//     return DateOfDelivery;
+// }
+//
+// [[nodiscard]] const std::string& Order::getPayment() const {
+//     return paymentMethod;
+// }
 
 void Order::addProduct( const std::shared_ptr<Product>& PointerProduct) {
     this->orderedProduct.push_back(PointerProduct);

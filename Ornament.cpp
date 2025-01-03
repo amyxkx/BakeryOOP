@@ -20,13 +20,13 @@ Ornament& Ornament::operator=( const Ornament& other) {
     return *this;
 };
 
- const std::string& Ornament::getName() const& {
-    return name;
-};
-
- std::string Ornament::getAmountType() const{
-    return amountType;
-};
+//  const std::string& Ornament::getName() const& {
+//     return name;
+// };
+//
+// const std::string& Ornament::getAmountType() const{
+//     return amountType;
+// };
 
  float Ornament::getPieceWeight() const {
     return weight_piece;

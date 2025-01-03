@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <string>
-#include <iostream>
 
 class ProductPage {
 protected:
@@ -17,9 +16,9 @@ protected:
 public:
     ProductPage(int offsetX, int offsetY, const std::string& buttonText_);
 
-    [[nodiscard]] std::string getTitle() const;
+    [[nodiscard]] const std::string& getTitle() const;
     [[nodiscard]] std::string getButtonText() const;
-    [[nodiscard]] std::string getAssets() const;
+    [[nodiscard]] const std::string& getAssets() const;
 
     virtual bool isClicked(sf::RenderWindow& window);
 };

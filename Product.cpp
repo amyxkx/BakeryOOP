@@ -19,8 +19,7 @@ std::shared_ptr<Product> Product::clone() const {
     return nullptr;
 }
 
-// Getter implementations
-std::string Product::getProductName() const {
+ const std::string& Product::getProductName() const {
     return productName;
 }
 
@@ -28,13 +27,6 @@ int Product::getProductID() const {
     return productID;
 }
 
-std::string Product::getFlavor() const {
-    return flavor;
-}
-
-std::string Product::getCream() const {
-    return cream;
-}
 
 float Product::getWeight() const {
     return weight;

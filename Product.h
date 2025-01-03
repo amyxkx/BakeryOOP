@@ -21,10 +21,10 @@ public:
     virtual float FinalPrice() const;
     virtual std::shared_ptr<Product> clone() const;
 
-    std::string getProductName() const;
+    const std::string& getProductName() const;
     int getProductID() const;
-    std::string getFlavor() const;
-    std::string getCream() const;
+    const std::string& getFlavor() const;
+    const std::string& getCream() const;
     float getWeight() const;
     float getBasePrice() const;
 

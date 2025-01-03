@@ -16,26 +16,3 @@ float Cakes::FinalPrice() const {
     return totalPrice;
 }
 
-const std::string& Cakes::getFlavorProfile() const {
-    return FlavorProfile;
-}
-
-const std::string& Cakes::getDecorationStyle() const {
-    return DecorationStyle;
-}
-
-int Cakes::getDaysFresh() const {
-    return days_fresh;
-}
-
-const std::vector<Ornament>& Cakes::getOrnaments() const {
-    return ornaments;
-}
-
-std::string Cakes::getName() const {
-    return Product::getProductName();
-}
-
-int Cakes::getID() const {
-    return Product::getProductID();
-}

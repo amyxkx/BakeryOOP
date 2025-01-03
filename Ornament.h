@@ -20,7 +20,7 @@ public:
 
     [[nodiscard]] const std::string& getName() const&;
 
-    [[nodiscard]] std::string getAmountType() const;
+    [[nodiscard]] const std::string& getAmountType() const;
 
     [[nodiscard]] float getPieceWeight() const;
 

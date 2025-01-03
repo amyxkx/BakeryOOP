@@ -37,17 +37,6 @@ sf::Text createText(const std::string& content, sf::Font const& font, unsigned i
     return text;
 }
 
-sf::Sprite createSprite(const std::string& imagePath, float x, float y) {
-    sf::Texture texture;
-    if (!texture.loadFromFile(imagePath)) {
-        std::cerr << "Failed to load image: " << imagePath << '\n';
-    }
-    sf::Sprite sprite;
-    sprite.setTexture(texture);
-    sprite.setPosition(x, y);
-    return sprite;
-}
-
 class Menu {
     std::vector<ProductFactory*> factories;
     std::vector<ProductPage*> pages;
@@ -329,16 +318,16 @@ void displayDetailsPage() {
                         }
 
                         EroareNumeInvalid numeValidator;
-                        numeValidator.valideazaNume(nameInput);
+                        EroareNumeInvalid::valideazaNume(nameInput);
 
                         EroareTelefonInvalid telefonValidator;
-                        telefonValidator.valideazaTelefon(phoneInput);
+                        EroareTelefonInvalid::valideazaTelefon(phoneInput);
 
                         EroareEmailInvalid emailValidator;
-                        emailValidator.valideazaEmail(emailInput);
+                        EroareEmailInvalid::valideazaEmail(emailInput);
 
                         EroareDataInvalida dataValidator;
-                        dataValidator.valideazaData(dateInput);
+                        EroareDataInvalida::valideazaData(dateInput);
 
                         isFormValid = true;
                         errorMessage.setString("");

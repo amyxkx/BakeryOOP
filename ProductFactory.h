@@ -5,6 +5,7 @@
 #include <memory>
 #include "Product.h"
 #include "ProductPage.h"
+#include <iostream>
 
 class ProductFactory {
         std::vector<std::shared_ptr<Product>> products;

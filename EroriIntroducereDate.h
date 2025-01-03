@@ -1,12 +1,12 @@
-#include "EroareInput.h"
-#include <chrono>
-
 #ifndef ERORIINTRODUCEREDATE_H
 #define ERORIINTRODUCEREDATE_H
 
+#include "EroareInput.h"
+#include <chrono>
+
 class EroareTelefonInvalid : public EroareInput {
 
-    void valideazaTelefonIntern(const std::string& telefon) {
+    static void valideazaTelefonIntern(const std::string& telefon) {
         int digitCount = 0;
 
         for (char c : telefon) {
@@ -22,19 +22,19 @@ class EroareTelefonInvalid : public EroareInput {
 
 public:
     // Funcția publică care apelează metoda privată
-    void valideazaTelefon(const std::string& telefon) {
+    static void valideazaTelefon(const std::string& telefon) {
         valideazaTelefonIntern(telefon);  // Apelează metoda privată
     }
 
-    const char* what() const noexcept override {
+    [[nodiscard]] const char* what() const noexcept override {
         return "Numarul de telefon trebuie sa contina 10 cifre!";
     }
 };
 
 class EroareDataInvalida : public EroareInput {
 private:
-    void valideazaDataIntern(const std::string& data) {
-        const std::regex pattern("^\\d{2}-\\d{2}-\\d{4}$");
+    static void valideazaDataIntern(const std::string& data) {
+        const std::regex pattern(R"(^\d{2}-\d{2}-\d{4}$)");
 
         if (!std::regex_match(data, pattern)) {
             throw EroareDataInvalida();
@@ -64,18 +64,18 @@ private:
     }
 
 public:
-    void valideazaData(const std::string& data) {
+    static void valideazaData(const std::string& data) {
         valideazaDataIntern(data);  // Apelează metoda privată
     }
 
-    const char* what() const noexcept override {
+    [[nodiscard]] const char* what() const noexcept override {
         return "Va rog puneti o data valabila !";
     }
 };
 
 class EroareEmailInvalid : public EroareInput {
 
-    void valideazaEmailIntern(const std::string& email) {
+    static void valideazaEmailIntern(const std::string& email) {
         const std::regex pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
 
         if (!std::regex_match(email, pattern)) {
@@ -84,18 +84,18 @@ class EroareEmailInvalid : public EroareInput {
     }
 
 public:
-    void valideazaEmail(const std::string& email) {
+    static void valideazaEmail(const std::string& email) {
         valideazaEmailIntern(email);  // Apelează metoda privată
     }
 
-    const char* what() const noexcept override {
+    [[nodiscard]] const char* what() const noexcept override {
         return "Adresa de email introdusă este invalidă!";
     }
 };
 
 class EroareNumeInvalid : public EroareInput {
 
-    void valideazaNumeIntern(const std::string& nume) {
+    static void valideazaNumeIntern(const std::string& nume) {
         if (nume.length() < 2) {
             throw EroareNumeInvalid();
         }
@@ -107,11 +107,11 @@ class EroareNumeInvalid : public EroareInput {
     }
 
 public:
-    void valideazaNume(const std::string& nume) {
+    static void valideazaNume(const std::string& nume) {
         valideazaNumeIntern(nume);  // Apelează metoda privată
     }
 
-    const char* what() const noexcept override {
+    [[nodiscard]] const char* what() const noexcept override {
         return "Numele introdus este invalid!";
     }
 };
