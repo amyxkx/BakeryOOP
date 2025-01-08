@@ -17,7 +17,7 @@ protected:
 public:
 
     Product(int ID, const std::string& name, const std::string& flv, const std::string& cr, float w, float price);
-    Product(float price);
+    explicit Product(float price);
 
     virtual float FinalPrice() const;
   //  virtual std::shared_ptr<Product> clone() const;

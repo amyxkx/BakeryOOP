@@ -11,15 +11,14 @@ class PastryFactory : public ProductFactory {
 private:
         std::vector<std::shared_ptr<Product>> getProducts() override {
 
-            std::vector<std::shared_ptr<Product>> products;
-            products.push_back(std::make_shared<Pastry>(createCroissant()));
-            products.push_back(std::make_shared<Pastry>(createBaguette()));
-            products.push_back(std::make_shared<Pastry>(createBaklava()));
-            products.push_back(std::make_shared<Pastry>(createCinnamonRoll()));
-            products.push_back(std::make_shared<Pastry>(createDanish()));
-            products.push_back(std::make_shared<Pastry>(createEclair()));
+            this->products.push_back(std::make_shared<Pastry>(createCroissant()));
+            this->products.push_back(std::make_shared<Pastry>(createBaguette()));
+            this->products.push_back(std::make_shared<Pastry>(createBaklava()));
+            this->products.push_back(std::make_shared<Pastry>(createCinnamonRoll()));
+            this->products.push_back(std::make_shared<Pastry>(createDanish()));
+            this->products.push_back(std::make_shared<Pastry>(createEclair()));
 
-            return products;
+            return this->products;
         }
 
         ProductPage* getProductPage() override {

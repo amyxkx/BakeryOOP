@@ -6,21 +6,10 @@ Pastry::Pastry(const int ID, const std::string& name, const std::string& flavor,
     : Product(ID, name, flavor, cream, weight_without_ornaments, price_per_kg),
       Specific(specific), FlavorProfile(flavorProfile) {}
 
-// std::string Pastry::getName() const {
-//     return Product::getProductName();
-// }
-//
-// int Pastry::getID() const {
-//     return Product::getProductID();
-// }
-//
-// const std::string& Pastry::getFlavorProfile() const {
-//     return FlavorProfile;
-// }
 
 float Pastry::FinalPrice() const {
 
-    float basePrice = getBasePrice();
+    float localbasePrice = getBasePrice();
 
     auto now = std::chrono::system_clock::now();
     std::time_t currentTime = std::chrono::system_clock::to_time_t(now);
@@ -31,6 +20,6 @@ float Pastry::FinalPrice() const {
     if (closingHour - currentHour == 1) {
         return basePrice * 0.5f; // 50% off
     }
-    return basePrice;
+    return localbasePrice;
 }
 int Pastry::closingHour = 20;

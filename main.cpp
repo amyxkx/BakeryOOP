@@ -141,7 +141,7 @@ void displayOrderPage(const Order& order) {
     float yPos = 150;
     float costOfOrder=0;
 
-    const auto& orderedProduct = order.getOrderedProducts();
+    const auto& orderedProduct = this->order.getOrderedProducts();
         std::cout << "Ordered Products: " << std::endl;
         for (const auto& product : orderedProduct) {
             if (product != nullptr) {

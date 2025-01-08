@@ -14,9 +14,9 @@ protected:
     std::string assets;
 
 public:
-    ProductPage( const std::string& buttonText_);
+    explicit ProductPage( const std::string& buttonText_);
 
-    [[nodiscard]] const std::string& getTitle() const;
+   // [[nodiscard]] const std::string& getTitle() const;
     [[nodiscard]] std::string getButtonText() const;
     [[nodiscard]] const std::string& getAssets() const;
 

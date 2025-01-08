@@ -12,14 +12,14 @@ class SeasonalCakeFactory : public ProductFactory {
     public:
 
         std::vector<std::shared_ptr<Product>> getProducts() override {
-            std::vector<std::shared_ptr<Product>> products;
-            products.push_back(std::make_shared<SeasonalSpecialCake>(createChristmasCake()));
-            products.push_back(std::make_shared<SeasonalSpecialCake>(createEasterCake()));
-            products.push_back(std::make_shared<SeasonalSpecialCake>(createHalloweenCake()));
-            products.push_back(std::make_shared<SeasonalSpecialCake>(createValentinesCake()));
-            products.push_back(std::make_shared<SeasonalSpecialCake>(createMothersDayCake()));
-            products.push_back(std::make_shared<SeasonalSpecialCake>(createNewYearCake()));
-            return products;
+
+            this->products.push_back(std::make_shared<SeasonalSpecialCake>(createChristmasCake()));
+            this->products.push_back(std::make_shared<SeasonalSpecialCake>(createEasterCake()));
+            this->products.push_back(std::make_shared<SeasonalSpecialCake>(createHalloweenCake()));
+            this->products.push_back(std::make_shared<SeasonalSpecialCake>(createValentinesCake()));
+            this->products.push_back(std::make_shared<SeasonalSpecialCake>(createMothersDayCake()));
+            this->products.push_back(std::make_shared<SeasonalSpecialCake>(createNewYearCake()));
+            return this->products;
         }
 
 

@@ -10,7 +10,7 @@ float Cakes::FinalPrice() const {
     float totalPrice = basePrice * weight;
 
     for (const auto& ornament : ornaments) {
-        totalPrice += ornament.getPrice() * ornament.getPieceWeight();
+        totalPrice += static_cast<float>(ornament.getPrice() * ornament.getPieceWeight());
     }
     if (days_fresh < 2) {
         totalPrice *= 0.9; // 10% discount
