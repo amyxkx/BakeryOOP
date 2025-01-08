@@ -14,10 +14,10 @@ float Product::getBasePrice() const {
 float Product::FinalPrice() const {
     return basePrice*weight;
 }
-
-std::shared_ptr<Product> Product::clone() const {
-    return nullptr;
-}
+//
+// std::shared_ptr<Product> Product::clone() const {
+//     return nullptr;
+// }
 
  const std::string& Product::getProductName() const {
     return productName;
