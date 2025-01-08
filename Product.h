@@ -20,7 +20,7 @@ public:
     Product(float price);
 
     virtual float FinalPrice() const;
-    virtual std::shared_ptr<Product> clone() const;
+  //  virtual std::shared_ptr<Product> clone() const;
 
     const std::string& getProductName() const;
     int getProductID() const;
