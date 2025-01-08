@@ -9,7 +9,7 @@ public:
         : ProductPage( buttonText_) {
         assets = "D:/BakeryOOP/assets/PaginaSeasonalCakes/";
     }
-    virtual ~SeasonalCakePage() = default;
+    virtual ~SeasonalCakePage() override= default;
 };
 
 #endif // SEASONALCAKEPAGE_H

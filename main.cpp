@@ -424,7 +424,7 @@ void displayMenuPage() {
         float yPos = 300;
         for (auto& factory : factories) {
             if (factory != nullptr) {
-                ProductPage* page = factory->getProductPage();
+               const ProductPage* page = factory->getProductPage();
                 if (page != nullptr) {
 
                     sf::RectangleShape button(sf::Vector2f(320, 70));
@@ -494,7 +494,7 @@ void displayProductPage(size_t index) {
         std::vector<sf::RectangleShape> localbuttons;
         std::vector<sf::Text> localbuttonLabels;
 
-        ProductPage* page = factories[index]->getProductPage();
+        const ProductPage* page = factories[index]->getProductPage();
         if (page == nullptr) {
             std::cerr << "Error: Product page is null.\n";
             return;

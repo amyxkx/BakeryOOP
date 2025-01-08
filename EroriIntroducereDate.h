@@ -42,7 +42,7 @@ private:
 
         auto now = std::chrono::system_clock::now();
         std::time_t currentTime = std::chrono::system_clock::to_time_t(now);
-        std::tm* localTime = std::localtime(&currentTime);
+        const std::tm* localTime = std::localtime(&currentTime);
 
         int currentDay = localTime->tm_mday;
         int currentMonth = localTime->tm_mon + 1;

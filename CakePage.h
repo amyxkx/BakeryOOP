@@ -9,6 +9,6 @@ public:
         : ProductPage( buttonText_) {
         assets = "D:/BakeryOOP/assets/PaginaCakes/";
     }
-    virtual ~CakePage() = default;
+    virtual ~CakePage() override = default;
 };
 #endif // CAKEPAGE_H

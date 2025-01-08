@@ -9,7 +9,8 @@ public:
         : ProductPage( buttonText_) {
         assets = "D:/BakeryOOP/assets/PaginaPastries/";
     }
-    virtual ~PastryPage() = default;
+
+    virtual ~PastryPage() override = default;
 };
 
 #endif // PASTRYPAGE_H
