@@ -8,18 +8,18 @@ ProductPage::ProductPage( const std::string& buttonText_) {
     }
 
     button = sf::RectangleShape(sf::Vector2f(320, 70));
-    button.setPosition(120, basePosition + 50);
+    button.setPosition(120.f, static_cast<float>(basePosition + 50));
     button.setFillColor(sf::Color(0, 0, 0, 170));
     buttonText.setString(buttonText_);
     buttonText.setFont(font);
     buttonText.setCharacterSize(20);
     buttonText.setFillColor(sf::Color::White);
-    buttonText.setPosition(140, basePosition + 60);
+    buttonText.setPosition(140.f, static_cast<float>(basePosition + 60));
 }
 
-const std::string &ProductPage::getTitle() const {
-    return title;
-}
+// const std::string &ProductPage::getTitle() const {
+//     return title;
+// }
 
 std::string ProductPage::getButtonText() const {
     return buttonText.getString();
@@ -28,7 +28,7 @@ std::string ProductPage::getButtonText() const {
 const std::string &ProductPage::getAssets() const {
     return assets;
 }
-
-bool ProductPage::isClicked(sf::RenderWindow& window) {
+// clang-tidy: suppress unused-function warning
+[[maybe_unused]] bool ProductPage::isClicked(sf::RenderWindow& window) {
     return button.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
 }

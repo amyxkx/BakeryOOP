@@ -29,7 +29,7 @@ Order& Order::operator=(const Order &other) {
 void Order::addProduct( const std::shared_ptr<Product>& PointerProduct) {
     this->orderedProduct.push_back(PointerProduct);
 }
-
-void Order::clearOrder() {
-    orderedProduct.clear();
-}
+//
+// void Order::clearOrder() {
+//     orderedProduct.clear();
+// }

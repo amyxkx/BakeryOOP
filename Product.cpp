@@ -27,8 +27,7 @@ int Product::getProductID() const {
     return productID;
 }
 
-
-float Product::getWeight() const {
-    return weight;
-}
+// float Product::getWeight() const {
+//     return weight;
+// }
 

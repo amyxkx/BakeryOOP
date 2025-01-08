@@ -7,13 +7,13 @@ SeasonalSpecialCake::SeasonalSpecialCake(const int ID, const std::string& name, 
                                          const std::string& season, const std::string& availabilityDate, const std::string& message)
     : Product(ID, name, flavor, cream, weight, basePrice), SeasonName(season), availabilityToBuy(availabilityDate), message(message) {}
 
-int SeasonalSpecialCake::getID() const {
-    return getProductID();
-}
-
-std::string SeasonalSpecialCake::getName() const {
-    return getProductName();
-}
+// int SeasonalSpecialCake::getID() const {
+//     return getProductID();
+// }
+//
+// std::string SeasonalSpecialCake::getName() const {
+//     return getProductName();
+// }
 
 float SeasonalSpecialCake::FinalPrice() const {
     auto now = std::chrono::system_clock::now();

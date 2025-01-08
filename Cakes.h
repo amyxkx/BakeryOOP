@@ -26,9 +26,9 @@ public:
     // [[nodiscard]] std::string getName() const;
     // [[nodiscard]] int getID() const;
 
-    [[nodiscard]] std::shared_ptr<Product> clone() const override {
-        return std::make_shared<Cakes>(*this);
-    }
+    // [[nodiscard]] std::shared_ptr<Product> clone() const override {
+    //     return std::make_shared<Cakes>(*this);
+    // }
 };
 
 #endif // CAKES_H

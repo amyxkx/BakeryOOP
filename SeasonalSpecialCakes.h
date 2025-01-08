@@ -13,7 +13,7 @@ public:
     SeasonalSpecialCake(const int ID, const std::string& name, const std::string& flavor, const std::string& cream, float weight, float basePrice,
                         const std::string& season, const std::string& availabilityDate, const std::string& message);
 
-    [[nodiscard]] int getID() const;
+  //  [[nodiscard]] int getID() const;
     [[nodiscard]] std::string getName() const;
     [[nodiscard]] float FinalPrice() const override;
 };
