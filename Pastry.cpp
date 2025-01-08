@@ -6,13 +6,13 @@ Pastry::Pastry(const int ID, const std::string& name, const std::string& flavor,
     : Product(ID, name, flavor, cream, weight_without_ornaments, price_per_kg),
       Specific(specific), FlavorProfile(flavorProfile) {}
 
-std::string Pastry::getName() const {
-    return Product::getProductName();
-}
-
-int Pastry::getID() const {
-    return Product::getProductID();
-}
+// std::string Pastry::getName() const {
+//     return Product::getProductName();
+// }
+//
+// int Pastry::getID() const {
+//     return Product::getProductID();
+// }
 //
 // const std::string& Pastry::getFlavorProfile() const {
 //     return FlavorProfile;
