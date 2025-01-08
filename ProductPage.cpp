@@ -28,7 +28,7 @@ std::string ProductPage::getButtonText() const {
 const std::string &ProductPage::getAssets() const {
     return assets;
 }
-// clang-tidy: suppress unused-function warning
+// cppcheck: suppress unused-function warning
 [[maybe_unused]] bool ProductPage::isClicked(sf::RenderWindow& window) {
     return button.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
 }
