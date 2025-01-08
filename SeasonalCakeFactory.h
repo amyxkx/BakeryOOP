@@ -52,5 +52,6 @@ class SeasonalCakeFactory : public ProductFactory {
             return {6, "Halloween Special", "Pumpkin", "Spiced Cream", 2.0f, 140.0f, "Autumn", "2024-10-31", "Happy Halloween!"};
         }
 
+    ~SeasonalCakeFactory() override = default;
 };
 #endif // SEASONALCAKEFACTORY_H

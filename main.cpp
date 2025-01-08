@@ -491,8 +491,8 @@ void displayMenuPage() {
 
 void displayProductPage(size_t index) {
         if (index < factories.size() && factories[index] != nullptr) {
-        std::vector<sf::RectangleShape> buttons;
-        std::vector<sf::Text> buttonLabels;
+        std::vector<sf::RectangleShape> localbuttons;
+        std::vector<sf::Text> localbuttonLabels;
 
         ProductPage* page = factories[index]->getProductPage();
         if (page == nullptr) {
@@ -544,12 +544,12 @@ void displayProductPage(size_t index) {
                 std::cerr << "Failed to load image for " << products[i]->getProductName() << "\n";
             }
 
-            buttons.push_back(button);
+            localbuttons.push_back(button);
 
             sf::Text label(products[i]->getProductName(), font, 20);
             label.setFillColor(sf::Color::White);
             label.setPosition(posX + 10, posY + BUTTON_HEIGHT + 5);
-            buttonLabels.push_back(label);
+            localbuttonLabels.push_back(label);
         }
 
         while (window.isOpen()) {
@@ -560,9 +560,8 @@ void displayProductPage(size_t index) {
                 }
 
                 if (event.type == sf::Event::MouseButtonPressed) {
-                    for (size_t i = 0; i < buttons.size(); ++i) {
-                        if (buttons[i].getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
-
+                    for (size_t i = 0; i < localbuttons.size(); ++i) {
+                        if (localbuttons[i].getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
                             if (i < products.size() && products[i] != nullptr) {
 
                                 order.addProduct(products[i]);
@@ -578,10 +577,10 @@ void displayProductPage(size_t index) {
             }
             window.clear();
             window.draw(backgroundSprite);
-            for (auto& label : buttonLabels) {
+            for (auto& label : localbuttonLabels) {
                 window.draw(label);
             }
-            for (auto& button : buttons) {
+            for (auto& button : localbuttons) {
                 window.draw(button);
             }
             window.display();

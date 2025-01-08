@@ -6,10 +6,9 @@
 #include "PastryPage.h"
 #include <memory>
 #include <vector>
+
 class PastryFactory : public ProductFactory {
-
-    public:
-
+private:
         std::vector<std::shared_ptr<Product>> getProducts() override {
 
             std::vector<std::shared_ptr<Product>> products;
@@ -51,7 +50,7 @@ class PastryFactory : public ProductFactory {
         static Pastry createEclair() {
             return {6, "Eclair", "Vanilla", "Chocolate Glaze", 0.2f, 80.0f, "French", "Creamy and rich"};
         }
-
+    ~PastryFactory() override = default;
     };
 
 

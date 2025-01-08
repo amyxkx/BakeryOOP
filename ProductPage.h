@@ -21,6 +21,7 @@ public:
     [[nodiscard]] const std::string& getAssets() const;
 
     virtual bool isClicked(sf::RenderWindow& window);
+    virtual ~ProductPage() = default;
 };
 
 #endif // PRODUCT_PAGE_H

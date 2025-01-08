@@ -19,16 +19,6 @@ public:
 
     [[nodiscard]] float FinalPrice() const override;
 
-    // [[nodiscard]] const std::string& getFlavorProfile() const;
-    // [[nodiscard]] const std::string& getDecorationStyle() const;
-    // [[nodiscard]] int getDaysFresh() const;
-    // [[nodiscard]] const std::vector<Ornament>& getOrnaments() const;
-    // [[nodiscard]] std::string getName() const;
-    // [[nodiscard]] int getID() const;
-
-    // [[nodiscard]] std::shared_ptr<Product> clone() const override {
-    //     return std::make_shared<Cakes>(*this);
-    // }
 };
 
 #endif // CAKES_H

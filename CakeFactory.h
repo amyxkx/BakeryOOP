@@ -52,6 +52,7 @@ public:
         static Cakes createCoffeeWalnutCake() {
             return {6, "Coffee Walnut Cake", "Coffee&Cacao", "Walnut Cream", 3.0f, 90, "Bold and Nutty", "Elegant Coffee Frosting with Walnut Garnish", 4, CoffeeWalnutOrnaments};
         }
+    ~CakeFactory() override = default;
     };
 
 #endif // CAKEFACTORY_H
