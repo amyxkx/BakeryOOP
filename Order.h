@@ -22,13 +22,13 @@ public:
 
     Order& operator=(const Order& other);
 
-    const std::string& getDateOfDelivery() const;
-    const std::string& getPayment() const;
+    // const std::string& getDateOfDelivery() const;
+    // const std::string& getPayment() const;
     void addProduct( const std::shared_ptr<Product>& PointerProduct);
 
     void clearOrder();
 
-    const std::vector<std::shared_ptr<Product>>& getOrderedProducts() const {
+    [[nodiscard]] const std::vector<std::shared_ptr<Product>>& getOrderedProducts() const {
         return orderedProduct;
     }
 

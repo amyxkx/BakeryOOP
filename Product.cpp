@@ -1,5 +1,5 @@
 #include "Product.h"
-
+#include <iostream>
 
 Product::Product(int ID, const std::string& name, const std::string& flv, const std::string& cr, float w, float price)
     : productID(ID), productName(name), flavor(flv), cream(cr), weight(w), basePrice(price) {}

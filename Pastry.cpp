@@ -13,10 +13,10 @@ std::string Pastry::getName() const {
 int Pastry::getID() const {
     return Product::getProductID();
 }
-
-const std::string& Pastry::getFlavorProfile() const {
-    return FlavorProfile;
-}
+//
+// const std::string& Pastry::getFlavorProfile() const {
+//     return FlavorProfile;
+// }
 
 float Pastry::FinalPrice() const {
 

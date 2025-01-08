@@ -1,12 +1,10 @@
 #include "Ornament.h"
 #include <vector>
 
-Ornament::Ornament( std::string n, std::string amntType, const float w, const float p)
-: name(n), amountType( amntType), weight_piece(w), price(p) {}
+Ornament::Ornament( const std::string& n, std::string amntType, const float w, const float p)
+: name(n), amountType( std::move(amntType)), weight_piece(w), price(p) {}
 
-Ornament::Ornament(const Ornament& other)
-    : name(other.name), amountType(other.amountType),
-      weight_piece(other.weight_piece), price(other.price) {}
+Ornament::Ornament(const Ornament& other) = default;
 
 
 Ornament& Ornament::operator=( const Ornament& other) {

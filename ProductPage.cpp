@@ -1,6 +1,7 @@
 #include "ProductPage.h"
+#include <iostream>
 
-ProductPage::ProductPage(int offsetX, int offsetY, const std::string& buttonText_) {
+ProductPage::ProductPage( const std::string& buttonText_) {
     if (!font.loadFromFile("D:/BakeryOOP/assets/font/YujiMai.ttf")) {
         std::cerr << "Failed to load font.\n";
         exit(-1);
@@ -16,7 +17,7 @@ ProductPage::ProductPage(int offsetX, int offsetY, const std::string& buttonText
     buttonText.setPosition(140, basePosition + 60);
 }
 
-std::string ProductPage::getTitle() const {
+const std::string &ProductPage::getTitle() const {
     return title;
 }
 
@@ -24,7 +25,7 @@ std::string ProductPage::getButtonText() const {
     return buttonText.getString();
 }
 
-std::string ProductPage::getAssets() const {
+const std::string &ProductPage::getAssets() const {
     return assets;
 }
 

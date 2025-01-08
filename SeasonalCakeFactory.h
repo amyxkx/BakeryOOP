@@ -25,7 +25,7 @@ class SeasonalCakeFactory : public ProductFactory {
 
         ProductPage* getProductPage() override {
             std::cout << "Creating Seasonal Cake Page\n";
-            return new SeasonalCakePage(0, 0, "Seasonals");
+            return new SeasonalCakePage( "Seasonals");
         }
 
         static SeasonalSpecialCake createChristmasCake() {

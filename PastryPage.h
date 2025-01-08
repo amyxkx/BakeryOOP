@@ -5,11 +5,11 @@
 
 class PastryPage : public ProductPage {
 public:
-    PastryPage(int offsetX, int offsetY, const std::string& buttonText_)
-        : ProductPage(offsetX, offsetY, buttonText_) {
+    explicit PastryPage( const std::string& buttonText_)
+        : ProductPage( buttonText_) {
         assets = "D:/BakeryOOP/assets/PaginaPastries/";
     }
-
+    virtual ~PastryPage() = default;
 };
 
 #endif // PASTRYPAGE_H

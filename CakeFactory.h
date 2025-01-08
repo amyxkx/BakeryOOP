@@ -26,7 +26,7 @@ public:
 
         ProductPage* getProductPage() override {
             std::cout << "Creating Cake Page\n";
-            return new CakePage(0, 0, "Cakes");
+            return new CakePage( "Cakes");
         }
 
         static Cakes createChocolateCake() {

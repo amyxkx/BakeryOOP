@@ -12,15 +12,15 @@ class Ornament {
     float price;
 
 public:
-    Ornament( std::string n, std::string amntType, float w_piece, float p) ;
+    Ornament( const std::string& n, std::string amntType, float w_piece, float p) ;
 
     Ornament( const Ornament& other) ;
 
     Ornament& operator=( const Ornament& other) ;
 
-    [[nodiscard]] const std::string& getName() const&;
-
-    [[nodiscard]] const std::string& getAmountType() const;
+    // [[nodiscard]] const std::string& getName() const&;
+    //
+    // [[nodiscard]] const std::string& getAmountType() const;
 
     [[nodiscard]] float getPieceWeight() const;
 

@@ -25,7 +25,7 @@ class PastryFactory : public ProductFactory {
 
         ProductPage* getProductPage() override {
             std::cout << "Creating Pastry Page\n";
-            return new PastryPage(0, 0, "Pastries");
+            return new PastryPage( "Pastries");
         }
 
         static Pastry createCroissant() {

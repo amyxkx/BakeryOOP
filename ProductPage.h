@@ -14,7 +14,7 @@ protected:
     std::string assets;
 
 public:
-    ProductPage(int offsetX, int offsetY, const std::string& buttonText_);
+    ProductPage( const std::string& buttonText_);
 
     [[nodiscard]] const std::string& getTitle() const;
     [[nodiscard]] std::string getButtonText() const;

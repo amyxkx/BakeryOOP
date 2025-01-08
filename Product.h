@@ -3,6 +3,7 @@
 
 #include <string>
 #include <memory>
+#include <iostream>
 
 class Product {
 protected:
@@ -23,8 +24,8 @@ public:
 
     const std::string& getProductName() const;
     int getProductID() const;
-    const std::string& getFlavor() const;
-    const std::string& getCream() const;
+    // const std::string& getFlavor() const;
+    // const std::string& getCream() const;
     float getWeight() const;
     float getBasePrice() const;
 

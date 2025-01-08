@@ -4,13 +4,11 @@
 #include "ProductPage.h"
 
 class CakePage : public ProductPage {
-    std::string assets;
 public:
-    CakePage(int offsetX, int offsetY, const std::string& buttonText_)
-        : ProductPage(offsetX, offsetY, buttonText_) {
+    explicit CakePage( const std::string& buttonText_)
+        : ProductPage( buttonText_) {
         assets = "D:/BakeryOOP/assets/PaginaCakes/";
     }
-
+    virtual ~CakePage() = default;
 };
-
 #endif // CAKEPAGE_H
