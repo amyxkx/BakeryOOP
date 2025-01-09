@@ -55,12 +55,12 @@ private:
         static Pastry createEclair() {
             return {6, "Eclair", "Vanilla", "Chocolate Glaze", 0.2f, 80.0f, "French", "Creamy and rich"};
         }
-    ~PastryFactory() override = default;
 
 public:
-    PastryFactory() {
-        cloneAllProducts();
+    void createAndCloneProducts() {
+      cloneAllProducts();
     }
+
     void cloneAllProducts() {
         auto pastries = getProducts();
         std::vector<std::shared_ptr<Product>> clonedPastries;
@@ -77,5 +77,6 @@ public:
     static std::unique_ptr<PastryFactory> create() {
         return std::unique_ptr<PastryFactory>(new PastryFactory());
     }
+    ~PastryFactory() override = default;
 };
 #endif // PASTRYFACTORY_H
