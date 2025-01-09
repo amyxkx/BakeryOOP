@@ -57,8 +57,10 @@ private:
         }
 
 public:
-    PastryFactory() {
-        cloneAllProducts();  // Automatically clone products when the factory is created
+    PastryFactory() = default;
+
+    void initializeProducts() {
+        cloneAllProducts();  // Now called after the object is constructed
     }
 
     void cloneAllProducts() {
@@ -75,7 +77,9 @@ public:
         }
     }
     static std::unique_ptr<PastryFactory> create() {
-        return std::unique_ptr<PastryFactory>(new PastryFactory());
+        auto factory = std::make_unique<PastryFactory>();
+        factory->initializeProducts();  // Initialize products after object creation
+        return factory;
     }
     ~PastryFactory() override = default;
 };
