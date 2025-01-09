@@ -615,7 +615,7 @@ int main() {
         std::cerr << "Failed to load font.\n";
         return -1;
     }
-
+    PastryFactory pastryFactory; pastryFactory.cloneAllProducts();
     Menu menu;
     menu.run();
     printCurrentDateTime();
