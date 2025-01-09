@@ -57,8 +57,8 @@ private:
         }
 
 public:
-    void createAndCloneProducts() {
-      cloneAllProducts();
+    PastryFactory() {
+        cloneAllProducts();  // Automatically clone products when the factory is created
     }
 
     void cloneAllProducts() {
