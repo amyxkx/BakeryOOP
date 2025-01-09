@@ -615,8 +615,6 @@ int main() {
         std::cerr << "Failed to load font.\n";
         return -1;
     }
-    std::unique_ptr<PastryFactory> pastryFactory = std::make_unique<PastryFactory>();
-    pastryFactory->cloneAllProducts();
     Menu menu;
     menu.run();
     printCurrentDateTime();

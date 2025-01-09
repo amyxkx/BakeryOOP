@@ -58,6 +58,9 @@ private:
     ~PastryFactory() override = default;
 
 public:
+    PastryFactory() {
+        cloneAllProducts();
+    }
     void cloneAllProducts() {
         auto pastries = getProducts();
         std::vector<std::shared_ptr<Product>> clonedPastries;
@@ -70,6 +73,9 @@ public:
                 std::cerr << "Eroare la clonarea unui produs " << e.what() << std::endl;
             }
         }
+    }
+    static std::unique_ptr<PastryFactory> create() {
+        return std::unique_ptr<PastryFactory>(new PastryFactory());
     }
 };
 #endif // PASTRYFACTORY_H
