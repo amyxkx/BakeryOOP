@@ -19,7 +19,7 @@ float Product::FinalPrice() const {
 //     return nullptr;
 // }
 
- const std::string& Product::getProductName() const {
+const std::string& Product::getProductName() const {
     return productName;
 }
 
