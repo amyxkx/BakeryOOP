@@ -23,3 +23,4 @@ float Pastry::FinalPrice() const {
     return localbasePrice;
 }
 int Pastry::closingHour = 20;
+

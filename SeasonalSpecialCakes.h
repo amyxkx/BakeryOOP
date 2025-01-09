@@ -10,12 +10,14 @@ class SeasonalSpecialCake : public Product {
     std::string message;
 
 public:
-    SeasonalSpecialCake(const int ID, const std::string& name, const std::string& flavor, const std::string& cream, float weight, float basePrice,
+    SeasonalSpecialCake(int ID, const std::string& name, const std::string& flavor, const std::string& cream, float weight, float basePrice,
                         const std::string& season, const std::string& availabilityDate, const std::string& message);
 
-  //  [[nodiscard]] int getID() const;
-    [[nodiscard]] std::string getName() const;
     [[nodiscard]] float FinalPrice() const override;
+
+    [[nodiscard]] std::shared_ptr<Product> clone() const override {
+        return std::make_shared<SeasonalSpecialCake>(*this);
+    }
 };
 
 #endif // SEASONAL_SPECIAL_CAKE_H

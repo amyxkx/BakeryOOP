@@ -20,6 +20,12 @@ private:
 
             return this->products;
         }
+        std::shared_ptr<Product> cloneProduct(int index) {
+            if (index < 0 || index >= static_cast<int>(products.size())) {
+                throw std::out_of_range("Index invalid");
+            }
+            return products[index]->clone();
+        }
 
         ProductPage* getProductPage() override {
             std::cout << "Creating Pastry Page\n";

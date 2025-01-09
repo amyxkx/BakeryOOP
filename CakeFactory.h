@@ -9,7 +9,6 @@
 
 class CakeFactory : public ProductFactory {
 
-public:
         std::vector<std::shared_ptr<Product>> getProducts() override {
 
             this->products.push_back(std::make_shared<Cakes>(createChocolateCake()));
@@ -21,6 +20,14 @@ public:
 
             return this->products;
         }
+
+        std::shared_ptr<Product> cloneProduct(int index) {
+            if (index < 0 || index >= static_cast<int>(products.size())) {
+                throw std::out_of_range("Index invalid");
+            }
+            return products[index]->clone();
+        }
+
 
         ProductPage* getProductPage() override {
             std::cout << "Creating Cake Page\n";
