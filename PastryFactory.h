@@ -56,7 +56,20 @@ private:
             return {6, "Eclair", "Vanilla", "Chocolate Glaze", 0.2f, 80.0f, "French", "Creamy and rich"};
         }
     ~PastryFactory() override = default;
-    };
 
+public:
+    void cloneAllProducts() {
+        auto pastries = getProducts();
+        std::vector<std::shared_ptr<Product>> clonedPastries;
 
+        for (std::size_t i = 0; i < pastries.size(); ++i) {
+            try {
+                auto clonedPastry = cloneProduct(i);
+                clonedPastries.push_back(clonedPastry);
+            } catch (const std::exception& e) {
+                std::cerr << "Eroare la clonarea unui produs " << e.what() << std::endl;
+            }
+        }
+    }
+};
 #endif // PASTRYFACTORY_H
