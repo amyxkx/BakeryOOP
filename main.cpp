@@ -331,7 +331,7 @@ void displayDetailsPage() {
                         clientBuilder.setOrderAddress(addressInput);
 
                         Client client = clientBuilder.build();
-                        Order order = orderBuilder.build();
+                        Order orderLocal = orderBuilder.build();
 
                         errorMessage.setString("");
 
