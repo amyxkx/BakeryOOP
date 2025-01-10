@@ -12,6 +12,7 @@ class Client {
     std::string OrderAddress;
     std::string EmailAddress;
 
+public:
     static void valideazaNume(const std::string& nume) {
         if (nume.length() < 2) {
             throw EroareNumeInvalid();
@@ -29,7 +30,6 @@ class Client {
         }
     }
 
-public:
     Client(std::string nm, std::string phone, std::string adrs, std::string email);
     Client() = default;
 };

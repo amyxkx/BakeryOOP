@@ -9,13 +9,12 @@
 
 class Order {
     std::string DateOfDelivery;
-    std::string paymentMethod;
     static int orderCounter;
     Client client;
     std::vector<std::shared_ptr<Product>>  orderedProduct;
 
 public:
-    Order( std::string Date, std::string payment, Client client );
+    Order( std::string Date,  Client client );
 
     Order() = default;
 
@@ -30,6 +29,7 @@ public:
     [[nodiscard]] const std::vector<std::shared_ptr<Product>>& getOrderedProducts() const {
         return orderedProduct;
     }
+    explicit Order(const std::string& date) : DateOfDelivery(date) {}
 
 };
 

@@ -16,6 +16,8 @@
 #include "PastryFactory.h"
 #include "CakeFactory.h"
 #include "SeasonalCakeFactory.h"
+#include "OrderBuilder.h"
+#include "ClientBuilder.h"
 
 constexpr float WINDOW_WIDTH = 1280;
 constexpr float WINDOW_HEIGHT = 720;
@@ -40,8 +42,8 @@ sf::Text createText(const std::string& content, sf::Font const& font, unsigned i
 class Menu {
     std::vector<ProductFactory*> factories;
     std::vector<ProductPage*> pages;
-    //ClientBuilder clientBuilder;
-    //OrderBuilder orderBuilder;
+    ClientBuilder clientBuilder;
+    OrderBuilder orderBuilder;
     Order order;
     sf::RenderWindow window;
     sf::Font font;
@@ -112,7 +114,6 @@ void displayWelcomePage() {
         window.draw(welcomeShadow);
         window.draw(welcomeText);
 
-
         window.draw(button);
         window.draw(buttonShadow);
         window.draw(buttonText);
@@ -147,8 +148,6 @@ void displayOrderPage(const Order& localorder) {
                 costOfOrder+=product->FinalPrice();
             }
         }
-
-  //  std::cout <<"Price for the order: "<<costOfOrder<< std::endl;
 
     if (orderedProduct.empty()) {
         sf::Text emptyText = createText("Your order is empty.", font, 30, sf::Color::Red, 100, yPos);
@@ -225,6 +224,7 @@ void displayOrderPage(const Order& localorder) {
 }
 
 void displayDetailsPage() {
+
     sf::Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("D:/BakeryOOP/assets/client/backgroundClient.jpg")) {
         std::cerr << "Failed to load background image.\n";
@@ -316,18 +316,23 @@ void displayDetailsPage() {
                         }
 
                         EroareNumeInvalid numeValidator;
-                        EroareNumeInvalid::valideazaNume(nameInput);
+                        clientBuilder.setName(nameInput);
 
                         EroareTelefonInvalid telefonValidator;
-                        EroareTelefonInvalid::valideazaTelefon(phoneInput);
+                        clientBuilder.setPhoneNumber(phoneInput);
 
                         EroareEmailInvalid emailValidator;
-                        EroareEmailInvalid::valideazaEmail(emailInput);
+                        clientBuilder.setEmailAddress(emailInput);
 
                         EroareDataInvalida dataValidator;
-                        EroareDataInvalida::valideazaData(dateInput);
+                        orderBuilder.setDateOfDelivery(dateInput);
 
                         isFormValid = true;
+                        clientBuilder.setOrderAddress(addressInput);
+
+                        Client client = clientBuilder.build();
+                        Order order = orderBuilder.build();
+
                         errorMessage.setString("");
 
                         return;
@@ -460,8 +465,7 @@ void displayMenuPage() {
                     }
 
                    if (buttonBasket.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
-                    //    std::cout << "Navigating to the order page...\n";
-                        displayOrderPage(order);
+                       displayOrderPage(order);
                         return;
                     }
                 }
@@ -520,7 +524,6 @@ void displayProductPage(size_t index) {
                 std::cerr << "Product at index " << i << " is null!\n";
                 continue;
             }
-
             size_t row = i / 3;
             size_t col = i % 3;
 
@@ -556,12 +559,12 @@ void displayProductPage(size_t index) {
                         if (localbuttons[i].getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
                             if (i < products.size() && products[i] != nullptr) {
                                 order.addProduct(products[i]);
+                                orderBuilder.addProduct(products[i]);
                                 return;
                             }
                         }
                     }
                 }
-
             }
             window.clear();
             window.draw(backgroundSprite);
