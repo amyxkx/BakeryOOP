@@ -86,15 +86,10 @@ add_executable(${PROJECT_NAME}
         SeasonalCakePage.cpp
         SeasonalCakePage.h
         CakeFactory.cpp
-        Cupcakes.cpp
-        Cupcakes.h
         CupcakeFactory.cpp
-        CupcakeFactory.h
-        OrderBuilder.cpp
-        OrderBuilder.h
-        OrderBuilder.cpp
         ClientBuilder.cpp
-        ClientBuilder.h
+        OrderBuilder.cpp
+        Cupcakes.cpp
 )
 include(cmake/CompilerFlags.cmake)
 
