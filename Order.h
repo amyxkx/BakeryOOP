@@ -29,8 +29,8 @@ public:
     [[nodiscard]] const std::vector<std::shared_ptr<Product>>& getOrderedProducts() const {
         return orderedProduct;
     }
-    explicit Order(const std::string& date) : DateOfDelivery(date) {}
 
+    explicit Order(const std::string& date) : DateOfDelivery(date) {}
 };
 
 #endif //ORDER_H

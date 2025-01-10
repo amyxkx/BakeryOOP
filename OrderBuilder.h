@@ -12,6 +12,7 @@ class OrderBuilder {
     std::vector<std::shared_ptr<Product>> orderedProduct;
 
 public:
+
     OrderBuilder& setDateOfDelivery(const std::string& date);
     OrderBuilder& addProduct(const std::shared_ptr<Product>& product);
     Order build();

@@ -21,6 +21,7 @@ ClientBuilder& ClientBuilder::setEmailAddress(const std::string& email) {
 }
 
 Client ClientBuilder::build() {
+
     EroareNumeInvalid::valideazaNume(name);
     EroareTelefonInvalid::valideazaTelefon(phoneNumber);
     EroareEmailInvalid::valideazaEmail(emailAddress);
