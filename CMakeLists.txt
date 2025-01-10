@@ -85,6 +85,7 @@ add_executable(${PROJECT_NAME}
         PastryPage.h
         SeasonalCakePage.cpp
         SeasonalCakePage.h
+        CakeFactory.cpp
 )
 include(cmake/CompilerFlags.cmake)
 

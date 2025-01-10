@@ -8,11 +8,11 @@
 #include <vector>
 
 class PastryFactory : public ProductFactory {
-private:
- //   std::vector<std::shared_ptr<Product>> products;
 
     std::vector<std::shared_ptr<Product>> getProducts() override;
     std::shared_ptr<Product> cloneProduct(int index);
+    void initializeProducts();
+    void cloneAllProducts();
 
     ProductPage* getProductPage() override;
 
@@ -25,8 +25,6 @@ private:
 
 public:
     PastryFactory();
-    void initializeProducts();
-    void cloneAllProducts();
     static std::unique_ptr<PastryFactory> create();
 
     void prepare_pastry(Product* product);
