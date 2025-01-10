@@ -27,6 +27,10 @@ public:
     Cakes& operator=(const Cakes& other);
 
     friend void swap(Cakes& first, Cakes& second) noexcept;
+
+    void prepare() const {
+        std::cout << "Preparing a cake! " << std::endl;
+    }
 };
 
 #endif // CAKES_H

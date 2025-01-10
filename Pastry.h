@@ -26,7 +26,7 @@ public:
     friend void swap(Pastry& first, Pastry& second) noexcept;
 
     void prepare() const {
-        std::cout << "Preparing the pastry!" << std::endl;
+        std::cout << "Preparing a pastry! " << std::endl;
     }
 };
 

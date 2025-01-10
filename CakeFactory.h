@@ -57,6 +57,45 @@ class CakeFactory : public ProductFactory {
         static Cakes createCoffeeWalnutCake() {
             return {6, "Coffee Walnut Cake", "Coffee&Cacao", "Walnut Cream", 3.0f, 90, "Bold and Nutty", "Elegant Coffee Frosting with Walnut Garnish", 4, CoffeeWalnutOrnaments};
         }
+
+    void initializeProducts() {
+            cloneAllProducts();
+        }
+
+    void cloneAllProducts() {
+            auto cakes = getProducts();
+            std::vector<std::shared_ptr<Product>> clonedCakes;
+
+            for (std::size_t i = 0; i < cakes.size(); ++i) {
+                try {
+                    auto clonedCake = cloneProduct(i);
+                    clonedCakes.push_back(clonedCake);
+                } catch (const std::exception& e) {
+                    std::cerr << "Eroare la clonarea unui tort " << e.what() << std::endl;
+                }
+            }
+        }
+public:
+    static std::unique_ptr<CakeFactory> create() {
+            auto factory = std::make_unique<CakeFactory>();
+            factory->initializeProducts();
+            return factory;
+        }
+    void prepare_cake(Product* product) {
+            // Downcast folosind dynamic_cast
+            const Cakes* cake = dynamic_cast<Cakes*>(product);
+            if (cake) {
+                cake->prepare();
+            } else {
+                std::cout << "Not a cake, cannot prepare." << std::endl;
+            }
+        }
+
+    void PrepareCakesForOrders() {
+            for (auto& product : products) {
+                prepare_cake(product.get());
+            }
+        }
     ~CakeFactory() override = default;
     };
 

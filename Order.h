@@ -13,6 +13,7 @@ class Order {
     static int orderCounter;
     Client client;
     std::vector<std::shared_ptr<Product>>  orderedProduct;
+
 public:
     Order( std::string Date, std::string payment, Client client );
 
@@ -22,8 +23,6 @@ public:
 
     Order& operator=(const Order& other);
 
-    // const std::string& getDateOfDelivery() const;
-    // const std::string& getPayment() const;
     void addProduct( const std::shared_ptr<Product>& PointerProduct);
 
     void clearOrder();

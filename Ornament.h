@@ -22,8 +22,6 @@ public:
 
     [[nodiscard]] float getPrice() const;
 
-
-
 friend std::ostream& operator<<(std::ostream&os, const Ornament& ornm);
 };
 extern std::vector<Ornament> ChocolateOrnaments;

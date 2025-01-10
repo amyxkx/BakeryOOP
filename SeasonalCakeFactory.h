@@ -55,7 +55,44 @@ class SeasonalCakeFactory : public ProductFactory {
         static SeasonalSpecialCake createHalloweenCake() {
             return {6, "Halloween Special", "Pumpkin", "Spiced Cream", 2.0f, 140.0f, "Autumn", "2024-10-31", "Happy Halloween!"};
         }
+    void initializeProducts() {
+            cloneAllProducts();  // Now called after the object is constructed
+        }
 
+    void cloneAllProducts() {
+            auto seasonalcakes = getProducts();
+            std::vector<std::shared_ptr<Product>> clonedSeasonalCake;
+
+            for (std::size_t i = 0; i < seasonalcakes.size(); ++i) {
+                try {
+                    auto clonedCake = cloneProduct(i);
+                    clonedSeasonalCake.push_back(clonedCake);
+                } catch (const std::exception& e) {
+                    std::cerr << "Eroare la clonarea unui tort de sezon " << e.what() << std::endl;
+                }
+            }
+        }
+public:
+    static std::unique_ptr<SeasonalCakeFactory> create() {
+        auto factory = std::make_unique<SeasonalCakeFactory>();
+        factory->initializeProducts();
+        return factory;
+    }
+    void prepare_cake(Product* product) {
+        // Downcast folosind dynamic_cast
+        const SeasonalSpecialCake* Seasonalcake = dynamic_cast<SeasonalSpecialCake*>(product);
+        if (Seasonalcake) {
+            Seasonalcake->prepare();
+        } else {
+            std::cout << "Not a seasonal cake, cannot prepare." << std::endl;
+        }
+    }
+
+    void PrepareSeasonalCakesForOrders() {
+        for (auto& product : products) {
+            prepare_cake(product.get());
+        }
+    }
     ~SeasonalCakeFactory() override = default;
 };
 #endif // SEASONALCAKEFACTORY_H

@@ -59,7 +59,7 @@ public:
         factories.push_back(new SeasonalCakeFactory);
 
         for (auto factory : factories) {
-            if (auto* page = factory->getProductPage()) { // Declare and assign 'page' inside the if-statement
+            if (auto* page = factory->getProductPage()) {
                 pages.push_back(page);
             }
         }
@@ -101,7 +101,7 @@ void displayWelcomePage() {
 
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (button.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
-                   std::cout << "Button clicked! Transitioning to Menu Page...\n";
+                 //  std::cout << "Button clicked! Transitioning to Menu Page...\n";
                    displayMenuPage();
                 }
             }
@@ -191,7 +191,7 @@ void displayOrderPage(const Order& localorder) {
                 window.close();
             }
             if (buttons.back().getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
-                std::cout << "Finish Order clicked! Proceeding to details page...\n";
+            //    std::cout << "Finish Order clicked! Proceeding to details page...\n";
                 displayDetailsPage();
                 return;
             }
@@ -468,7 +468,7 @@ void displayMenuPage() {
                     }
 
                    if (buttonBasket.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
-                        std::cout << "Navigating to the order page...\n";
+                    //    std::cout << "Navigating to the order page...\n";
                         displayOrderPage(order);
                         return;
                     }
@@ -615,13 +615,18 @@ int main() {
         std::cerr << "Failed to load font.\n";
         return -1;
     }
+    auto pastryFactory = PastryFactory::create();
+    pastryFactory->PreparePastriesForOrders();
+
+    auto cakeFactory = CakeFactory::create();
+    cakeFactory->PrepareCakesForOrders();
+
+    auto seasonalCakeFactory = SeasonalCakeFactory::create();
+    seasonalCakeFactory->PrepareSeasonalCakesForOrders();
+
     Menu menu;
     menu.run();
     printCurrentDateTime();
-
-    auto pastryFactory = PastryFactory::create();
-
-    pastryFactory->PreparePastriesForOrders();
 
     return 0;
 }

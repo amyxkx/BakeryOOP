@@ -32,15 +32,5 @@ class Client {
 public:
     Client(std::string nm, std::string phone, std::string adrs, std::string email);
     Client() = default;
-
-    // void setName(const std::string& nume) {
-    //     valideazaNume(nume);
-    //     name = nume;
-    // }
-    //
-    // void setEmailAddress(const std::string& email) {
-    //     valideazaEmail(email);
-    //     EmailAddress = email;
-    // }
 };
  #endif //CLIENT_H
