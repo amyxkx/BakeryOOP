@@ -81,6 +81,23 @@ public:
         factory->initializeProducts();  // Initialize products after object creation
         return factory;
     }
+
+    void prepare_pastry(Product* product) {
+        // Downcast folosind dynamic_cast
+        Pastry* pastry = dynamic_cast<Pastry*>(product);
+        if (pastry) {
+            pastry->prepare();
+        } else {
+            std::cout << "Not a pastry, cannot prepare." << std::endl;
+        }
+    }
+
+    void displayAndPreparePastries() {
+        for (auto& product : products) {
+            prepare_pastry(product.get());
+        }
+    }
+
     ~PastryFactory() override = default;
 };
 #endif // PASTRYFACTORY_H

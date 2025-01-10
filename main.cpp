@@ -619,5 +619,9 @@ int main() {
     menu.run();
     printCurrentDateTime();
 
+    auto pastryFactory = PastryFactory::create();
+
+    pastryFactory->displayAndPreparePastries();
+
     return 0;
 }
