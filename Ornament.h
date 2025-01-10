@@ -18,10 +18,6 @@ public:
 
     Ornament& operator=( const Ornament& other) ;
 
-    // [[nodiscard]] const std::string& getName() const&;
-    //
-    // [[nodiscard]] const std::string& getAmountType() const;
-
     [[nodiscard]] float getPieceWeight() const;
 
     [[nodiscard]] float getPrice() const;

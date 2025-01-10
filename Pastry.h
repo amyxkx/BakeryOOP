@@ -19,6 +19,11 @@ public:
     std::shared_ptr<Product> clone() const override {
         return std::make_shared<Pastry>(*this);
     }
+    Pastry(const Pastry& other);
+
+    Pastry& operator=(const Pastry& other);
+
+    friend void swap(Pastry& first, Pastry& second) noexcept;
 };
 
 #endif // PASTRY_H

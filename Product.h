@@ -28,7 +28,7 @@ public:
 
     virtual ~Product() = default;
 
-    virtual std::shared_ptr<Product> clone() const = 0;
+    virtual std::shared_ptr<Product> clone() const=0;
 };
 
 #endif // PRODUCT_H
