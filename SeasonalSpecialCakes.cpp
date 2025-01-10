@@ -39,3 +39,20 @@ float SeasonalSpecialCake::FinalPrice() const {
 
     return basePrice * weight;
 }
+SeasonalSpecialCake::SeasonalSpecialCake(const SeasonalSpecialCake& other)
+    : Product(other), SeasonName(other.SeasonName), availabilityToBuy(other.availabilityToBuy), message(other.message) {}
+
+SeasonalSpecialCake& SeasonalSpecialCake::operator=(const SeasonalSpecialCake& other) {
+    if (this != &other) {
+        SeasonalSpecialCake temp(other);
+        swap(*this, temp);
+    }
+    return *this;
+}
+
+void swap(SeasonalSpecialCake& first, SeasonalSpecialCake& second) noexcept {
+    using std::swap;
+    swap(first.SeasonName, second.SeasonName);
+    swap(first.availabilityToBuy, second.availabilityToBuy);
+    swap(first.message, second.message);
+}
