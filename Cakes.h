@@ -29,7 +29,7 @@ public:
     friend void swap(Cakes& first, Cakes& second) noexcept;
 
     void prepare() const {
-        std::cout << "Preparing a cake! " << std::endl;
+        std::cout << "Preparing the " << getName() <<" cake! " << std::endl;
     }
 };
 

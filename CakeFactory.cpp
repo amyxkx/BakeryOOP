@@ -18,7 +18,6 @@ std::shared_ptr<Product> CakeFactory::cloneProduct(int index) {
 }
 
 ProductPage* CakeFactory::getProductPage() {
-    std::cout << "Creating Cake Page\n";
     return new CakePage("Cakes");
 }
 

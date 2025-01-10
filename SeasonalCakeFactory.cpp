@@ -18,7 +18,6 @@ std::shared_ptr<Product> SeasonalCakeFactory::cloneProduct(int index) {
 }
 
 ProductPage* SeasonalCakeFactory::getProductPage() {
-    std::cout << "Creating Seasonal Cake Page\n";
     return new SeasonalCakePage("Seasonals");
 }
 

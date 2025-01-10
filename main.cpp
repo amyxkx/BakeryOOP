@@ -142,15 +142,13 @@ void displayOrderPage(const Order& localorder) {
     float costOfOrder=0;
 
     const auto& orderedProduct = localorder.getOrderedProducts();
-        std::cout << "Ordered Products: " << std::endl;
         for (const auto& product : orderedProduct) {
             if (product != nullptr) {
-                std::cout << product->getProductName() << " " << product->FinalPrice()<< "ron "<<std::endl;
                 costOfOrder+=product->FinalPrice();
             }
         }
 
-    std::cout <<"Price for the order: "<<costOfOrder<< std::endl;
+  //  std::cout <<"Price for the order: "<<costOfOrder<< std::endl;
 
     if (orderedProduct.empty()) {
         sf::Text emptyText = createText("Your order is empty.", font, 30, sf::Color::Red, 100, yPos);
@@ -332,12 +330,6 @@ void displayDetailsPage() {
                         isFormValid = true;
                         errorMessage.setString("");
 
-                        std::cout << "Order Completed:\n";
-                        std::cout << "Name: " << nameInput << "\n";
-                        std::cout << "Address: " << addressInput << "\n";
-                        std::cout << "Phone: " << phoneInput << "\n";
-                        std::cout << "Email: " << emailInput << "\n";
-                        std::cout << "Date: " << dateInput << "\n";
                         return;
 
                     } catch (const EroareNumeInvalid& e) {
@@ -563,11 +555,7 @@ void displayProductPage(size_t index) {
                     for (size_t i = 0; i < localbuttons.size(); ++i) {
                         if (localbuttons[i].getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
                             if (i < products.size() && products[i] != nullptr) {
-
                                 order.addProduct(products[i]);
-
-                                std::cout << "Product added to order: " << products[i]->getProductName() << std::endl;
-
                                 return;
                             }
                         }

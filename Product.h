@@ -29,6 +29,10 @@ public:
     virtual ~Product() = default;
 
     virtual std::shared_ptr<Product> clone() const=0;
+
+    [[nodiscard]] const std::string& getName() const {
+        return productName;
+    }
 };
 
 #endif // PRODUCT_H

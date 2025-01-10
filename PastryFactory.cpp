@@ -22,7 +22,6 @@ std::shared_ptr<Product> PastryFactory::cloneProduct(int index) {
 }
 
 ProductPage* PastryFactory::getProductPage() {
-    std::cout << "Creating Pastry Page\n";
     return new PastryPage("Pastries");
 }
 

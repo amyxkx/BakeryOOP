@@ -25,8 +25,9 @@ public:
     friend void swap(SeasonalSpecialCake& first, SeasonalSpecialCake& second) noexcept;
 
     void prepare() const {
-        std::cout << "Preparing a seasonal special cake! " << std::endl;
+        std::cout << "Preparing the " << getName() <<" seasonal special cake! " << std::endl;
     }
+
 };
 
 #endif // SEASONAL_SPECIAL_CAKE_H
