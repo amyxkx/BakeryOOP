@@ -67,7 +67,7 @@ void CupcakeFactory::prepare_cupcake(Product* product) {
         std::cout << "Not a cupcake, cannot prepare." << std::endl;
     }
 }
-
+// cppcheck-suppress unusedFunction ; false positive
 void CupcakeFactory::PrepareCupcakesForOrders() {
     for (auto& product : products) {
         prepare_cupcake(product.get());
