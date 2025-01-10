@@ -9,7 +9,7 @@
 
 class PastryFactory : public ProductFactory {
 private:
-    std::vector<std::shared_ptr<Product>> products;
+ //   std::vector<std::shared_ptr<Product>> products;
 
     std::vector<std::shared_ptr<Product>> getProducts() override;
     std::shared_ptr<Product> cloneProduct(int index);

@@ -51,7 +51,7 @@ Pastry PastryFactory::createEclair() {
 }
 
 void PastryFactory::initializeProducts() {
-    cloneAllProducts();  // Now called after the object is constructed
+    cloneAllProducts();
 }
 
 void PastryFactory::cloneAllProducts() {
@@ -70,7 +70,7 @@ void PastryFactory::cloneAllProducts() {
 
 std::unique_ptr<PastryFactory> PastryFactory::create() {
     auto factory = std::make_unique<PastryFactory>();
-    factory->initializeProducts();  // Initialize products after object creation
+    factory->initializeProducts();
     return factory;
 }
 
