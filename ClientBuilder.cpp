@@ -1,5 +1,6 @@
 #include "ClientBuilder.h"
 
+
 ClientBuilder& ClientBuilder::setName(const std::string& nm) {
     name = nm;
     return *this;

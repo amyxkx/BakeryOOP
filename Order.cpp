@@ -2,6 +2,7 @@
 
 #include <utility>
 
+
 Order::Order( std::string Date, Client client )
     : DateOfDelivery(std::move(Date)), client(std::move(client)) {
 };

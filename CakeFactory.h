@@ -22,11 +22,11 @@ private:
     static Cakes createCoffeeWalnutCake();
 
 public:
+
     static std::unique_ptr<CakeFactory> create();
     void prepare_cake(Product* product);
     void PrepareCakesForOrders();
     ProductPage* getProductPage() override;
-
 
     ~CakeFactory() override;
 };
