@@ -19,6 +19,9 @@
 #include "OrderBuilder.h"
 #include "ClientBuilder.h"
 
+#include "Storage.h"
+
+
 constexpr float WINDOW_WIDTH = 1280;
 constexpr float WINDOW_HEIGHT = 720;
 constexpr float BUTTON_WIDTH = 200;
@@ -252,7 +255,7 @@ void displayDetailsPage() {
     sf::Text addressLabel = createText("Delivery Address :", font, 30, sf::Color::Black, 200, 230);
     sf::Text phoneLabel = createText("Phone:", font, 30, sf::Color::Black, 200, 310);
     sf::Text emailLabel = createText("Email", font, 30, sf::Color::Black, 200, 390);
-    sf::Text textemail = createText("(****@****.***)", font, 20, sf::Color::Black, 200, 430);
+    sf::Text textemail = createText("(@.*)", font, 20, sf::Color::Black, 200, 430);
     sf::Text dateLabel = createText("Delivery date:", font, 30, sf::Color::Black, 200, 500);
     sf::Text textdate = createText("(DD-MM-YYYY)", font, 20, sf::Color::Black, 200, 540);
 
@@ -581,7 +584,6 @@ void displayProductPage(size_t index) {
     }
 }
 
-
 void run() {
         displayWelcomePage();
     }
@@ -597,6 +599,30 @@ void printCurrentDateTime() {
 
     std::cout << "Current Date and Time: ";
     std::cout << std::put_time(localTime, "%Y-%m-%d %H:%M:%S") << '\n';
+}
+
+void executeStockOperations() {
+
+    Storage<int> productStock(200);
+
+    Storage<std::string> productState("Stoc suficient");
+
+    productStock.display();
+    std::cout << "Stare initiala stoc: " << productState.getValue() << std::endl;
+
+    productStock.applyTransformation(updateStock);
+
+    productStock.display();
+
+    productState.setValue(changeState(productState.getValue()));
+    std::cout << "Starea curenta a stocului: " << productState.getValue() << std::endl;
+
+    productStock.applyTransformation(updateStock);
+
+    productStock.display();
+
+    productState.setValue(changeState(productState.getValue()));
+    std::cout << "Starea curenta a stocului: " << productState.getValue() << std::endl;
 }
 
 int main() {
@@ -617,7 +643,10 @@ int main() {
 
     Menu menu;
     menu.run();
+    std::cout<<"\n";
     printCurrentDateTime();
+    std::cout<<"\n";
+    executeStockOperations();
 
     return 0;
 }

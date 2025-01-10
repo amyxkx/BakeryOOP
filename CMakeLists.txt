@@ -90,6 +90,8 @@ add_executable(${PROJECT_NAME}
         ClientBuilder.cpp
         OrderBuilder.cpp
         Cupcakes.cpp
+        Storage.cpp
+        Storage.h
 )
 include(cmake/CompilerFlags.cmake)
 
