@@ -84,7 +84,7 @@ public:
 
     void prepare_pastry(Product* product) {
         // Downcast folosind dynamic_cast
-        Pastry* pastry = dynamic_cast<Pastry*>(product);
+        const Pastry* pastry = dynamic_cast<Pastry*>(product);
         if (pastry) {
             pastry->prepare();
         } else {
@@ -92,7 +92,7 @@ public:
         }
     }
 
-    void displayAndPreparePastries() {
+    void PreparePastriesForOrders() {
         for (auto& product : products) {
             prepare_pastry(product.get());
         }

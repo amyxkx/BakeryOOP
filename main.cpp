@@ -621,7 +621,7 @@ int main() {
 
     auto pastryFactory = PastryFactory::create();
 
-    pastryFactory->displayAndPreparePastries();
+    pastryFactory->PreparePastriesForOrders();
 
     return 0;
 }
