@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 
+
 int updateStock(int stock);
 std::string changeState(const std::string& state);
 
