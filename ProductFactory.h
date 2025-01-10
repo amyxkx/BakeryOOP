@@ -12,7 +12,6 @@ protected:
         std::vector<std::shared_ptr<Product>> products;
       [[maybe_unused]]  ProductPage* productPage;
 
-
 public:
     ProductFactory()
         : products(), productPage(nullptr) {}
