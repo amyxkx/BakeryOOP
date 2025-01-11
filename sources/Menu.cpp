@@ -2,7 +2,7 @@
 // Created by amalia on 1/11/2025.
 //
 #include "../headers/Menu.h"
-#include "../headers/storage.h"
+#include "../headers/Storage.h"
 #include <SFML/Window.hpp>
 #include "../headers/Product.h"
 #include "../headers/PastryFactory.h"
@@ -24,7 +24,7 @@ sf::Text Menu::createText(const std::string& content, sf::Font const& font, unsi
     return text;
 }
 
-Menu::Menu() : order() {
+Menu::Menu() {
     window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Dessert Collection");
 
     factories.push_back(new CakeFactory);
@@ -249,7 +249,7 @@ void Menu::displayDetailsPage() {
 
     auto checkInput = [&]() {
         try {
-            for (auto& field : inputFields) {
+            for (const auto& field : inputFields) {
                 if (field.empty()) {
                     throw EroareCampFormGol();
                 }
@@ -312,6 +312,7 @@ void Menu::displayDetailsPage() {
                 }
                 if (event.key.code == sf::Keyboard::Enter) {
                    checkInput();
+                    // cppcheck-suppress knownConditionTrueFalse
                     if (isFormValid) {
                         return;
                     }
@@ -321,6 +322,7 @@ void Menu::displayDetailsPage() {
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (finishButton.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
                     checkInput();
+                    // cppcheck-suppress knownConditionTrueFalse
                     if (isFormValid) {
                         return;
                     }

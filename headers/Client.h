@@ -17,6 +17,7 @@ public:
     Client(std::string nm, std::string phone, std::string adrs, std::string email);
     Client() = default;
     Client(const Client &other);
+    Client& operator=(const Client& other);
 
 };
  #endif //CLIENT_H

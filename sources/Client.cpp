@@ -10,3 +10,13 @@ Client::Client(const Client &other) {
     this->phoneNumber = other.phoneNumber;
     this->EmailAddress = other.EmailAddress;
 }
+
+Client& Client::operator=(const Client& other) {
+    if (this != &other) {
+        name = other.name;
+        phoneNumber = other.phoneNumber;
+        OrderAddress = other.OrderAddress;
+        EmailAddress = other.EmailAddress;
+    }
+    return *this;
+}
