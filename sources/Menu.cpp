@@ -37,7 +37,7 @@ Menu::Menu() {
         }
     }
 
-    if (!font.loadFromFile("assets/font/YujiMai.ttf")) {
+    if (!localFont.loadFromFile("assets/font/YujiMai.ttf")) {
         std::cerr << "Failed to load font.\n";
         exit(-1);
     }
@@ -52,14 +52,14 @@ void Menu::displayWelcomePage() {
         sf::Sprite backgroundSprite(backgroundTexture);
         backgroundSprite.setScale(0.3125f, 0.3125f);
 
-        sf::Text welcomeText = createText("Welcome to Sweet Spell Bakery!", font, 50, sf::Color::White, 200, 50);
+        sf::Text welcomeText = createText("Welcome to Sweet Spell Bakery!", localFont, 50, sf::Color::White, 200, 50);
 
         sf::Text welcomeShadow = welcomeText;
         welcomeShadow.setFillColor(sf::Color(139, 69, 19));
         welcomeShadow.setPosition(welcomeText.getPosition().x + 5, welcomeText.getPosition().y + 5);
 
         sf::RectangleShape button = createButton(100, 300, 280, 100, sf::Color(255, 255, 255, 160));
-        sf::Text buttonText = createText("Our Dessert \n Collection", font, 25, sf::Color(139, 69, 19), 160, 310);
+        sf::Text buttonText = createText("Our Dessert \n Collection", localFont, 25, sf::Color(139, 69, 19), 160, 310);
 
         sf::Text buttonShadow = buttonText;
         buttonShadow.setFillColor(sf::Color::White);
@@ -105,7 +105,7 @@ void Menu::displayOrderPage(const Order& localorder) {
     }
     sf::Sprite backgroundSprite(backgroundOrder);
 
-    sf::Text pageTitle = createText("Order Summary", font, 50, sf::Color(0, 0, 0), 400, 50);
+    sf::Text pageTitle = createText("Order Summary", localFont, 50, sf::Color(0, 0, 0), 400, 50);
     sf::Text pageTitleShadow = pageTitle;
     pageTitleShadow.setFillColor(sf::Color(139, 69, 19));
     pageTitleShadow.setPosition(pageTitle.getPosition().x + 5, pageTitle.getPosition().y + 5);
@@ -121,7 +121,7 @@ void Menu::displayOrderPage(const Order& localorder) {
         }
 
     if (orderedProduct.empty()) {
-        sf::Text emptyText = createText("Your order is empty.", font, 30, sf::Color::Red, 100, yPos);
+        sf::Text emptyText = createText("Your order is empty.", localFont, 30, sf::Color::Red, 100, yPos);
         window.draw(emptyText);
     }
 
@@ -129,7 +129,7 @@ void Menu::displayOrderPage(const Order& localorder) {
     formattedPrice.precision(2); formattedPrice << std::fixed << costOfOrder;
 
     sf::Text priceOfOrder;
-    priceOfOrder.setFont(font);
+    priceOfOrder.setFont(localFont);
     priceOfOrder.setPosition(120, 610);
     priceOfOrder.setFillColor(sf::Color(0,0,0));
 
@@ -146,7 +146,7 @@ void Menu::displayOrderPage(const Order& localorder) {
 
     sf::Text finishButtonText;
     finishButtonText.setString("Finish Order");
-    finishButtonText.setFont(font);
+    finishButtonText.setFont(localFont);
     finishButtonText.setCharacterSize(20);
     finishButtonText.setFillColor(sf::Color::White);
     finishButtonText.setPosition(750, 620);
@@ -179,7 +179,7 @@ void Menu::displayOrderPage(const Order& localorder) {
             if (product != nullptr) {
 
                 sf::Text productText;
-                productText.setFont(font);
+                productText.setFont(localFont);
                 productText.setString(product->getProductName());
                 productText.setCharacterSize(25);
                 productText.setFillColor(sf::Color::Black);
@@ -203,13 +203,13 @@ void Menu::displayDetailsPage() {
     }
     sf::Sprite backgroundSprite(backgroundTexture);
 
-    sf::Text pageTitle = createText("Finish order", font, 50, sf::Color(0, 0, 0), 500, 50);
+    sf::Text pageTitle = createText("Finish order", localFont, 50, sf::Color(0, 0, 0), 500, 50);
     sf::Text pageTitleShadow = pageTitle;
     pageTitleShadow.setFillColor(sf::Color(139, 69, 19));
     pageTitleShadow.setPosition(pageTitle.getPosition().x + 5, pageTitle.getPosition().y + 5);
 
     sf::Text errorMessage;
-    errorMessage.setFont(font);
+    errorMessage.setFont(localFont);
     errorMessage.setCharacterSize(30);
     errorMessage.setFillColor(sf::Color::Red);
     errorMessage.setPosition(350, 620);
@@ -221,28 +221,28 @@ void Menu::displayDetailsPage() {
     std::vector<std::string> inputFields(5);
     std::vector<sf::Text> labels(7);
 
-    labels[0] = createText("Name:", font, 30, sf::Color::Black, 200, 150);
-    labels[1] = createText("Delivery Address :", font, 30, sf::Color::Black, 200, 230);
-    labels[2] = createText("Phone:", font, 30, sf::Color::Black, 200, 310);
-    labels[3] = createText("Email", font, 30, sf::Color::Black, 200, 390);
-    labels[4] = createText("(@.*)", font, 20, sf::Color::Black, 200, 430);
-    labels[5] = createText("Delivery date:", font, 30, sf::Color::Black, 200, 500);
-    labels[6] = createText("(DD-MM-YYYY)", font, 20, sf::Color::Black, 200, 540);
+    labels[0] = createText("Name:", localFont, 30, sf::Color::Black, 200, 150);
+    labels[1] = createText("Delivery Address :", localFont, 30, sf::Color::Black, 200, 230);
+    labels[2] = createText("Phone:", localFont, 30, sf::Color::Black, 200, 310);
+    labels[3] = createText("Email", localFont, 30, sf::Color::Black, 200, 390);
+    labels[4] = createText("(@.*)", localFont, 20, sf::Color::Black, 200, 430);
+    labels[5] = createText("Delivery date:", localFont, 30, sf::Color::Black, 200, 500);
+    labels[6] = createText("(DD-MM-YYYY)", localFont, 20, sf::Color::Black, 200, 540);
 
     std::vector<sf::Text> fields(5);
 
-    fields[0] = createText("", font, 25, sf::Color::Black, 400, 150);
-    fields[1] = createText("", font, 25, sf::Color::Black, 500, 230);
-    fields[2] = createText("", font, 25, sf::Color::Black, 400, 310);
-    fields[3] = createText("", font, 25, sf::Color::Black, 400, 390);
-    fields[4] = createText("", font, 25, sf::Color::Black, 500, 500);
+    fields[0] = createText("", localFont, 25, sf::Color::Black, 400, 150);
+    fields[1] = createText("", localFont, 25, sf::Color::Black, 500, 230);
+    fields[2] = createText("", localFont, 25, sf::Color::Black, 400, 310);
+    fields[3] = createText("", localFont, 25, sf::Color::Black, 400, 390);
+    fields[4] = createText("", localFont, 25, sf::Color::Black, 500, 500);
 
 
     sf::RectangleShape finishButton(sf::Vector2f(200, 70));
     finishButton.setPosition(540, 550);
     finishButton.setFillColor(sf::Color(0, 0, 0, 200));
 
-    sf::Text finishText = createText("Submit", font, 25, sf::Color::White, 575, 565);
+    sf::Text finishText = createText("Submit", localFont, 25, sf::Color::White, 575, 565);
 
     int activeField = 0;
     bool isFormValid = false;
@@ -367,7 +367,7 @@ void Menu::displayMenuPage() {
         backgroundPage2.setScale(0.3125f, 0.3125f);
 
 
-        sf::Text pageTitle = createText("Discover the magic of our \n    Enchanted Desserts!", font, 50, sf::Color::White, 100, 50);
+        sf::Text pageTitle = createText("Discover the magic of our \n    Enchanted Desserts!", localFont, 50, sf::Color::White, 100, 50);
         sf::Text pageTitleShadow = pageTitle;
         pageTitleShadow.setFillColor(sf::Color(139, 69, 19));
         pageTitleShadow.setPosition(pageTitle.getPosition().x + 5, pageTitle.getPosition().y + 5);
@@ -390,7 +390,7 @@ void Menu::displayMenuPage() {
 
                     sf::Text buttonText;
                     buttonText.setString(page->getButtonText());
-                    buttonText.setFont(font);
+                    buttonText.setFont(localFont);
                     buttonText.setCharacterSize(20);
                     buttonText.setFillColor(sf::Color::White);
                     buttonText.setPosition(140, yPos + 20);
@@ -499,7 +499,7 @@ void Menu::displayProductPage(size_t index) {
 
             localbuttons.push_back(button);
 
-            sf::Text label(products[i]->getProductName(), font, 20);
+            sf::Text label(products[i]->getProductName(), localFont, 20);
             label.setFillColor(sf::Color::White);
             label.setPosition(posX + 10, posY + BUTTON_HEIGHT + 5);
             localbuttonLabels.push_back(label);

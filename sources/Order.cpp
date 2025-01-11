@@ -14,8 +14,8 @@ void Order::addProduct( const std::shared_ptr<Product>& PointerProduct) {
 //https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
 //copy-and-swap
 
-Order::Order(const Order &other) : DateOfDelivery(other.DateOfDelivery), client(other.client) {
-        orderedProduct = std::vector<std::shared_ptr<Product>>(other.orderedProduct.size());
+Order::Order(const Order &other) : DateOfDelivery(other.DateOfDelivery),
+client(other.client), orderedProduct(std::vector<std::shared_ptr<Product>>(other.orderedProduct.size())) {
         for (const auto& product : other.orderedProduct) {
             orderedProduct.push_back(product->clone()); //Facem o copie, deci copiem prin valoare
         }

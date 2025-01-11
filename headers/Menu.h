@@ -24,7 +24,7 @@ class Menu {
     OrderBuilder orderBuilder;
     Order order;
     sf::RenderWindow window;
-    sf::Font font;
+    sf::Font localFont;
 
     std::vector<sf::RectangleShape> buttons;
     std::vector<sf::Text> buttonTexts;
