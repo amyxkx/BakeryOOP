@@ -1,9 +1,17 @@
-# Nu primesc notă pentru că nu am pus titlu și descriere
+# Sweet Spell Bakery
 
-### Important!
-Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
-Codul generat pus "ca să fie"/pe care nu îl înțelegeți se punctează doar pentru puncte bonus, doar în contextul
-în care oferă funcționalități ajutătoare și doar dacă are sens.
+  Descoperă magia deserturilor fermecate, acum la îndemâna ta! Aplicația Sweet Spell Bakery îți transformă dorințele dulci în realitate, oferindu-ți o experiență rapidă, simplă și delicioasă. Cofetarii noștri, adevărați maeștri ai artei culinare, creează cu pasiune prăjituri rafinate, torturi spectaculoase pentru ocazii speciale și o selecție de deserturi unice, toate pregătite cu cele mai fine ingrediente.
+
+  Fie că visezi la o prăjitură delicată sau la un tort memorabil, acum, prin intermediul aplicației noastre, te poți bucura de toate acestea mai ușor ca niciodată. 
+Explorează aromele care te inspiră, plasează comanda oricând și oriunde, iar noi ne vom ocupa de restul.
+
+Intră acum în aplicație, lasă-te cucerit de vrăjile noastre dulci și bucură-te de un desert care te va face să te simți cu adevărat "under the sweet spell"!
+
+
+
+
+
+
 
 O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie de apeluri proxy către cod generat.
 
@@ -78,6 +86,24 @@ Proiectul este configurat cu CMake.
 
 Instrucțiuni pentru terminal:
 
+0. Biblioteci necesare pe Linux (presupunem sistem de operare bazat pe Debian)
+```sh
+sudo apt-get update && \
+  sudo apt-get install libxrandr-dev \
+    libxcursor-dev \
+    libudev-dev \
+    libopenal-dev \
+    libflac-dev \
+    libvorbis-dev \
+    libgl1-mesa-dev \
+    libegl1-mesa-dev \
+    libdrm-dev \
+    libgbm-dev \
+    libfreetype6-dev
+```
+
+Dacă lipsesc și alte biblioteci, ștergeți folder-ul de build de la pasul 1 și reconfigurați proiectul după ce ați instalat ce lipsea.
+
 1. Pasul de configurare
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
@@ -107,4 +133,6 @@ Vezi și [`scripts/cmake.sh`](scripts/cmake.sh).
 
 ## Resurse
 
+- [SFML](https://github.com/SFML/SFML/tree/2.6.1) (Zlib)
+  - [OpenAL](https://openal-soft.org/) (LGPL): din cauza licenței, trebuie distribuită ca shared library
 - adăugați trimiteri către resursele externe care v-au ajutat sau pe care le-ați folosit
