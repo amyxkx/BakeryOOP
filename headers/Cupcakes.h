@@ -20,8 +20,6 @@ public:
         return std::make_shared<Cupcake>(*this);
     }
 
-
-
     void prepare() const {
         std::cout << "Preparing the " << getName() <<" cupcake! " << std::endl;
     }

@@ -540,27 +540,23 @@ void Menu::displayProductPage(size_t index) {
 }
 
 void Menu::executeStockOperations() {
+    Storage<int> productStock(200);
+    Storage<std::string> productState("Stoc suficient");
 
-        Storage<int> productStock(200);
+    productStock.display();
+    productState.display();
 
-        Storage<std::string> productState("Stoc suficient");
+    productStock.applyTransformation(updateStock);
+    productStock.display();
 
-        productStock.display();
-        std::cout << "Stare initiala stoc: " << productState.getValue() << std::endl;
+    productState.applyTransformation(changeState);
+    productState.display();
 
-        productStock.applyTransformation(updateStock);
+    productStock.applyTransformation(updateStock);
+    productStock.display();
 
-        productStock.display();
-
-        productState.setValue(changeState(productState.getValue()));
-        std::cout << "Starea curenta a stocului: " << productState.getValue() << std::endl;
-
-        productStock.applyTransformation(updateStock);
-
-        productStock.display();
-
-        productState.setValue(changeState(productState.getValue()));
-        std::cout << "Starea curenta a stocului: " << productState.getValue() << std::endl;
+    productState.applyTransformation(changeState);
+    productState.display();
 }
 
 void Menu::run() {

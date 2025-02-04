@@ -4,7 +4,6 @@
 #include <string>
 #include <iostream>
 
-
 int updateStock(int stock);
 std::string changeState(const std::string& state);
 
@@ -15,10 +14,6 @@ class Storage {
 public:
     explicit Storage(const T& val);
 
-    const T& getValue() const;
-
-    void setValue(const T& val);
-
     template <typename Func>
     void applyTransformation(Func transformation);
 
@@ -27,16 +22,6 @@ public:
 
 template <typename T>
 Storage<T>::Storage(const T& val) : value(val) {}
-
-template <typename T>
-const T& Storage<T>::getValue() const {
-    return value;
-}
-
-template <typename T>
-void Storage<T>::setValue(const T& val) {
-    value = val;
-}
 
 template <typename T>
 template <typename Func>
