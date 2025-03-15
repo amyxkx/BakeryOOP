@@ -19,11 +19,11 @@ A C++ application for ordering bakery products, built using **SFML**, **OOP prin
 - **CLion** (as the development environment)  
 
 ## 📸 Screenshots  
-![image](https://github.com/user-attachments/assets/5a7c593e-3baa-433c-bc03-3d91299dae3d)
-![image](https://github.com/user-attachments/assets/b36b5c3f-8b3f-433e-97f0-88cafd0c2788)
-![image](https://github.com/user-attachments/assets/513b4217-960f-4b4b-8dd4-13662e53426f)
-![image](https://github.com/user-attachments/assets/5e9a2096-1175-413f-a40d-53bc8b270e51)
-![image](https://github.com/user-attachments/assets/389983be-e9a4-4927-aae2-7a18f05b1744)
-
+![image](https://github.com/user-attachments/assets/e878daed-3791-48c7-8adb-fe8ac575841d)
+![image](https://github.com/user-attachments/assets/8fc22cb1-0a27-4538-a215-84af7048b066)
+![image](https://github.com/user-attachments/assets/3a9096b1-5404-4fb2-88b1-89c1fbb0cc5f)
+![image](https://github.com/user-attachments/assets/a2a6cb6d-cc17-4bed-91f8-efc4328b7d43)
+The order will only be submitted once the introduced data is correct.
+![image](https://github.com/user-attachments/assets/f07fa373-dfa1-4b22-b868-cd1680e22f12)
 
 
